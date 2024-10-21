@@ -1,3 +1,5 @@
+import time
+
 
 class Reader():
     """
@@ -16,15 +18,13 @@ class Reader():
         """
         return self.file
     
-    def __load_file(fileName):
-        """
-        used to load a new file into the class.
-        :param filename: string path of the file
-        """
-        pass
+    def load_file(self, filepath):
+        self.file = open(filepath)
 
-    def read():
+    def read(self):
         """
         Method which actually displays the text onto screen.
         """
-        pass
+        for line in self.get_file():
+            print(line)
+            time.sleep(3)
