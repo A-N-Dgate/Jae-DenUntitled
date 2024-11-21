@@ -6,9 +6,11 @@ def display_text(reader, chapter_name, file_name, intro=False):
     #i was about to Reader reader = new Reader(); isnt that insane...
     if intro:
         reader.getReader().load_file("descriptions/chapterIntro/%s.txt"%(chapter_name))
+        reader.getReader().readChapt()
     else:
         reader.getReader().load_file("descriptions/%sparsing/%s.txt"%(chapter_name, file_name))
-    reader.getReader().read()
+        reader.getReader().readLine()
+    
     #end
 
 def string_parsing1(reader):

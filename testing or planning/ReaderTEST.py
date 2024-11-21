@@ -24,7 +24,10 @@ class ReaderTEST(unittest.TestCase):
         self.assertTrue(True)
 
     def test_readOneLine(self):
-        self.assertTrue(False) #hopefully this means fail
+        reader = Reader()
+        reader.load_file("test.txt")
+        reader.readLine()
+        self.assertTrue(True)
 
         
 

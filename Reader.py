@@ -23,14 +23,22 @@ class Reader():
 
     def readChapt(self):
         """
-        Method which actually displays the text onto screen.
+        Method which displays paragraphs of text onto the screen.
         """
         for line in self.get_file():
             print(line)
             time.sleep(3)
 
     def readLine(self):
-        pass
+        """
+        Method which displays one line of test onto the screen.
+        """
+        lines = []
+        for line in self.get_file():
+            lines.append(line)
+        
+        print("\n%s"%(lines[0]))
+        #inefficient but oh well
 
 
 #it might be best to make a singleton class
