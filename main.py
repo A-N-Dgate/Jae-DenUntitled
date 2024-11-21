@@ -1,4 +1,5 @@
 from segments import *
 
+reader = globalReader()
 Introduction()
-Chapter1() 
+Chapter1(reader) 

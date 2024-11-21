@@ -21,10 +21,27 @@ class Reader():
     def load_file(self, filepath):
         self.file = open(filepath)
 
-    def read(self):
+    def readChapt(self):
         """
         Method which actually displays the text onto screen.
         """
         for line in self.get_file():
             print(line)
             time.sleep(3)
+
+    def readLine(self):
+        pass
+
+
+#it might be best to make a singleton class
+class globalReader():
+    """
+    Class used to make sure that there is one reader object in the code
+    so that its easier to track its state
+    """
+
+    def __init__(self):
+        self.reader = Reader()
+
+    def getReader(self):
+        return self.reader

@@ -20,8 +20,11 @@ class ReaderTEST(unittest.TestCase):
         ##"test" if this looked right without having an auto-checker if ygm?
         reader = Reader()
         reader.load_file("chapIintro.txt")
-        reader.read()
+        reader.readChapt()
         self.assertTrue(True)
+
+    def test_readOneLine(self):
+        self.assertTrue(False) #hopefully this means fail
 
         
 
