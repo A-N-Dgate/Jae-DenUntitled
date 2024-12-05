@@ -4,5 +4,5 @@ def Introduction():
     pass
 
 def Chapter1(reader):
-    display_text(reader, "chapterI", None, True)
+    display_text(reader, "ChapterI", None, False, True)
     string_parsing1(reader)

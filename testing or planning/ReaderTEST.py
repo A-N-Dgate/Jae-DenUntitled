@@ -29,9 +29,6 @@ class ReaderTEST(unittest.TestCase):
         reader.readLine()
         self.assertTrue(True)
 
-        
-
-
 if __name__ == "__main__":
     unittest.main()
 
