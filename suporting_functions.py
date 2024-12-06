@@ -22,8 +22,8 @@ def string_parsing1(reader):
     fridge = False
     comp = False
     while not (locked and fridge and comp):
-        time.sleep(2)
-        inp = input(">")
+        time.sleep(3)
+        inp = input(">").lower()
         inp = inp.split()
 
         #first the general ones
@@ -31,17 +31,43 @@ def string_parsing1(reader):
             sys.exit()
 
         #string parsing begins
-        if "pet" in inp and ("cat" in inp or "cats" in inp):
+        elif "pet" in inp and ("cat" in inp or "cats" in inp):
             display_text(reader, "ChapterI", "petCats", True)
+
+        elif "suitcase" in inp and not("look" in inp):
+            display_text(reader, "ChapterI", "suitcase")
+            locked = True
+
+        elif "fridge" in inp:
+            display_text(reader, "ChapterI", "fridge", True)
+            fridge = True
+
+        elif "computer" in inp and ("turn" in inp and "off" in inp) and not("look" in inp):
+            display_text(reader, "ChapterI", "computerOff", True)
+            comp = True
+
+        elif "look" in inp and "computer" in inp:
+            display_text(reader, "ChapterI", "computer", True)
+
+        elif "look" in inp and "suitcase" in inp:
+            display_text(reader, "ChapterI", "lookSuit", True)
+
+        elif "look" in inp and "keyboard" in inp:
+            display_text(reader, "ChapterI", "keyboard", True)
+
+        elif "look" in inp and ("photograph" in inp or "photo" in inp):
+            display_text(reader, "ChapterI", "photo", True)
 
 
         #a sneeky test
-        if "test" in inp:
+        elif "test" in inp:
             display_text(reader, "ChapterI", "test")
 
         #input not recognised
-        #else:
-            #print("\nYou can't do that yet")
+        else:
+            print("\nI can't do that yet")
+    
+    print("\nI should leave now") #placeholder
 
 
 
