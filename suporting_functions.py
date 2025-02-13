@@ -16,6 +16,8 @@ def display_text(reader, chapter_name, file_name, para=False, intro=False):
     
     #end
 
+    #this needs to be organised better at some point? or don't break it? 
+
 def string_parsing1(reader):
     #one just in case I need to make more / create a general one
     locked = False
