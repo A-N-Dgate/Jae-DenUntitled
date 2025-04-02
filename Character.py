@@ -6,7 +6,7 @@ class Character():
     #singleton design pattern???? - maybe not bc it ~might~ be the basis of the devilmalz
 
     def __init__(self):
-        self.items = ["", "", "", ""] #fixed amount? I'm not sure because of the suitcase
+        self.items = ["", "", "", ""] 
         self.itemNo = 0 
         self.currentRoom = None
         self.level = 1

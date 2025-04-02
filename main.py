@@ -1,5 +1,6 @@
 from segments import *
+from Character import *
 
-reader = globalReader()
+player, reader = create()
 Introduction()
-Chapter1(reader) 
+Chapter1(reader, player) 

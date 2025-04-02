@@ -1,6 +1,14 @@
 from Reader import *
+from Character import *
+from Item import *
 import time
 import sys
+
+def create():
+    reader = globalReader()
+    player = Character()
+
+    return player, reader
 
 def display_text(reader, chapter_name, file_name, para=False, intro=False):
     #i was about to Reader reader = new Reader(); isnt that insane...
@@ -18,7 +26,7 @@ def display_text(reader, chapter_name, file_name, para=False, intro=False):
 
     #this needs to be organised better at some point? or don't break it? 
 
-def string_parsing1(reader):
+def string_parsing1(reader, player):
     #one just in case I need to make more / create a general one
     locked = False
     fridge = False
@@ -27,6 +35,10 @@ def string_parsing1(reader):
         time.sleep(3)
         inp = input(">").lower()
         inp = inp.split()
+
+        #putting the items here temporarily
+        catWand = Item("cat wand", "used for playing wth my cats.")
+        items = [catWand]
 
         #first the general ones
         if "quit" in inp:
@@ -60,6 +72,22 @@ def string_parsing1(reader):
         elif "look" in inp and ("photograph" in inp or "photo" in inp):
             display_text(reader, "ChapterI", "photo", True)
 
+        elif "look" in inp and ("cat" in inp or "cats" in inp) and (not("pet" in inp or "wand" in inp)):
+            display_text(reader, "ChapterI", "lookCats", True)
+
+        elif "look" in inp and "cat" in inp and "wand" in inp:
+            print("\n%s"%(catWand.show_desc()))
+
+        #now to add in items:
+        elif "pickup" in inp and ("cat" in inp and "wand" in inp):
+            if catWand in items and not(catWand.get_picked()):
+                player, catWand = pickup(player, catWand)
+                items = [catWand] #placeholder before adding rooms
+
+        elif "inv" in inp:
+            print("\n%s" %(player.show_inv()))
+
+
 
         #a sneeky test
         elif "test" in inp:
@@ -70,6 +98,12 @@ def string_parsing1(reader):
             print("\nI can't do that yet")
     
     print("\nI should leave now") #placeholder
+
+def pickup(player, item):
+    player.add_item(item)
+    item.picked_up()
+    print("\nYou have picked up the %s!" %(str(item)))
+    return player, item
 
 
 
