@@ -39,7 +39,7 @@ class CharacterTEST(unittest.TestCase):
 
     def test_itemsFull(self):
         player = Character()
-        print("\n inv ful test")
+        print("\n inv full test")
         for x in range(4):
             player.add_item("item")
             #change to use item object after
