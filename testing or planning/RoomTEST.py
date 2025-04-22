@@ -13,7 +13,7 @@ class RoomTEST(unittest.TestCase):
         room1 = Room("Room 1", "room used for testing", [item1])
 
         room1.remove_item(item1)
-        self.assertTrue(room1.__isItemEmpty())
+        self.assertTrue(room1.isItemEmpty())
 
     def test_look(self):
         print("\nlook around room test")
@@ -21,7 +21,7 @@ class RoomTEST(unittest.TestCase):
 
         #idk how to check strings on a seperate line properly
         print(str(room1))
-        self.assertFalse(False)
+        self.assertTrue(True)
 
 if __name__ == "__main__":
     unittest.main()

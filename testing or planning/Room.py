@@ -16,10 +16,11 @@ class Room():
         """
         removes an item from the room's item pool
         """
-        pass
+        if item in self.get_items():
+            self.get_items().remove(item)
 
-    def __isItemEmpty(self):
+    def isItemEmpty(self):
         return not self.get_items() #if list = true when list len > 0
 
-    def __str__():
-        pass #so this will default right? right??
+    def __str__(self):
+        return " %s\n%s" %(self.get_name(), self.get_desc())
