@@ -16,6 +16,8 @@ class Character():
     def get_level(self): return self.level
     def get_itemNo(self): return self.itemNo
 
+    def set_currentRoom(self, a): self.currentRoom = a
+
     def itemNo_inc(self): self.itemNo = self.get_itemNo() + 1
     def itemNo_dec(self): self.itemNo = self.get_itemNo() - 1
     #using the set_itemNo(self.get_itemNo() + 1) wasn't working so I thougth I shoudl try this

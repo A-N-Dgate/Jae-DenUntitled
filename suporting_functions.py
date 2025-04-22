@@ -1,14 +1,16 @@
 from Reader import *
 from Character import *
 from Item import *
+from Room import *
 import time
 import sys
 
 def create():
     reader = globalReader()
     player = Character()
-
+    player = create_room(player, 1) #change to generic later? maybe not needed
     return player, reader
+
 
 def display_text(reader, chapter_name, file_name, para=False, intro=False):
     #i was about to Reader reader = new Reader(); isnt that insane...
@@ -34,11 +36,7 @@ def string_parsing1(reader, player):
     while not (locked and fridge and comp):
         time.sleep(3)
         inp = input(">").lower()
-        inp = inp.split()
-
-        #putting the items here temporarily
-        catWand = Item("cat wand", "used for playing wth my cats.")
-        items = [catWand]
+        inp = inp.split()                                                                                                                                             
 
         #first the general ones
         if "quit" in inp:
@@ -86,6 +84,9 @@ def string_parsing1(reader, player):
 
         elif "inv" in inp:
             print("\n%s" %(player.show_inv()))
+
+        elif "look" in inp:
+            print(str(player.get_currentRoom()))
 
 
 
