@@ -12,6 +12,6 @@ adjustments I need to make to make this harder or easier.
 
 looking at your interface right now, this should be running in the
 windows command prompt. If so, to adjust your playing experience, 
---------right click on the upper bar
+--------right click on the upper bar (with the file directory)
 --------left click properties
-from here you can select font sizes and font; adjest to your preference.
+from here you can select font sizes and font; adjust to your preference.
