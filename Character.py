@@ -6,7 +6,7 @@ class Character():
     #singleton design pattern???? - maybe not bc it ~might~ be the basis of the devilmalz
 
     def __init__(self):
-        self.items = ["", "", "", ""] 
+        self.items = ["", "", "", ""] #fixed amount? 
         self.itemNo = 0 
         self.currentRoom = None
         self.level = 1
@@ -37,6 +37,16 @@ class Character():
             return "Item added to your inventory!"
         else:
             return "You have no more space in your inventory"
+
+    def drop_item(self, item):
+        """
+        removing an item from the item list
+        """
+        if item in self.get_items():
+            self.get_items().remove(item)
+            return "You have dropped %s!" %(item.get_name())
+        else:
+            return "You don't have %s in your inventory" %(item.get_name())
 
 
     def __isFull(self):

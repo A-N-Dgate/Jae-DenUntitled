@@ -1,5 +1,6 @@
 import unittest
 from Character import *
+from Item import *
 
 class CharacterTEST(unittest.TestCase):
     """
@@ -47,6 +48,22 @@ class CharacterTEST(unittest.TestCase):
         message = player.add_item("item")
         self.assertIsNotNone(message)
         print(message)
+
+    def test_dropItem(self):
+        player = Character()
+        print("\nDrop Item test")
+        item1 = Item("item1", "This is a test Item")
+        player.add_item(item1)
+        message = player.drop_item(item1)
+        self.assertEqual(message, "You have dropped item1!")
+
+    def test_dropItemNotThere(self):
+        player = Character()
+        print("\nDrop Item test not there")
+        item1 = Item("item1", "This is a test Item")
+        message = player.drop_item(item1)
+        self.assertEqual(message, "You don't have item1 in your inventory")
+
 
 if __name__ == "__main__":
     unittest.main()
