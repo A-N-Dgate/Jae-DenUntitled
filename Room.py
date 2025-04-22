@@ -1,4 +1,5 @@
 from Item import *
+from Reader import *
 
 class Room():
 
@@ -23,6 +24,20 @@ class Room():
 
     def isItemEmpty(self):
         return not self.get_items() #if list = true when list len > 0
+    
+    def isItemHere(self, itemStr):
+        for item in self.get_items():
+            if item.get_name() == itemStr:
+                return True
+        return False
+        #clean up?
+
+    def get_item(self, itemStr):
+        for item in self.get_items():
+            if item.get_name() == itemStr:
+                return item
+
+
 
     def __str__(self):
         return "\n %s%s" %(self.get_name(), self.get_desc())
@@ -32,11 +47,7 @@ class Room():
 def create_room(player, chaptNo):
     path = "descriptions/Rooms/%s.txt" %(str(chaptNo))
     text = open(path)
-    lines = []
-    #this is from reader; clean up and refactor
-    for line in text:
-        lines.append("\n%s"%(line.rstrip()))
-    desc = "".join(lines)
+    desc = combineText(text)
     #this NEEDS to be cleaned, maybe switch case bc theres only 6 but idk
     match chaptNo:
         case 1:

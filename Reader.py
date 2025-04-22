@@ -34,11 +34,7 @@ class Reader():
         """
         Method which displays text in a paragraph, without the timeout.
         """
-        lines = []
-        for line in self.get_file():
-            lines.append("\n%s"%(line.rstrip()))
-        #combine into one string
-        text = "".join(lines)
+        text = combineText(self.get_file())
         print(text)
         
 
@@ -66,3 +62,14 @@ class globalReader():
 
     def getReader(self):
         return self.reader
+
+
+def combineText(fileIttr):
+    #this can be used outside of the class
+    lines = []
+    for line in fileIttr:
+        lines.append("\n%s"%(line.rstrip()))
+    #combine into one string
+    text = "".join(lines)
+
+    return text

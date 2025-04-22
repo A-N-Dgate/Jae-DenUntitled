@@ -13,7 +13,6 @@ def create():
 
 
 def display_text(reader, chapter_name, file_name, para=False, intro=False):
-    #i was about to Reader reader = new Reader(); isnt that insane...
     if intro and not para:
         reader.getReader().load_file("descriptions/chapterIntro/%s.txt"%(chapter_name))
         reader.getReader().readChapt()
@@ -74,13 +73,15 @@ def string_parsing1(reader, player):
             display_text(reader, "ChapterI", "lookCats", True)
 
         elif "look" in inp and "cat" in inp and "wand" in inp:
-            print("\n%s"%(catWand.show_desc()))
+            if player.get_currentRoom().isItemHere("cat wand"):
+                item = player.get_currentRoom().get_item("cat wand")
+                print("%s"%(str(item)))
 
         #now to add in items:
         elif "pickup" in inp and ("cat" in inp and "wand" in inp):
-            if catWand in items and not(catWand.get_picked()):
-                player, catWand = pickup(player, catWand)
-                items = [catWand] #placeholder before adding rooms
+            if player.get_currentRoom().isItemHere("cat wand"):
+                item = player.get_currentRoom().get_item("cat wand")
+                player = pickup(player, item)
 
         elif "inv" in inp:
             print("\n%s" %(player.show_inv()))
@@ -103,8 +104,9 @@ def string_parsing1(reader, player):
 def pickup(player, item):
     player.add_item(item)
     item.picked_up()
+    player.get_currentRoom().remove_item(item)
     print("\nYou have picked up the %s!" %(str(item)))
-    return player, item
+    return player
 
 
 
