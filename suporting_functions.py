@@ -32,10 +32,13 @@ def string_parsing1(reader, player):
     locked = False
     fridge = False
     comp = False
+    inpCounter = 0
     while not (locked and fridge and comp):
         time.sleep(3)
         inp = input(">").lower()
-        inp = inp.split()                                                                                                                                             
+        inp = inp.split()
+
+        inpCounter += 1                                                                                                                                             
 
         #first the general ones
         if "quit" in inp:
@@ -57,7 +60,7 @@ def string_parsing1(reader, player):
             display_text(reader, "ChapterI", "computerOff", True)
             comp = True
 
-        elif "look" in inp and "computer" in inp:
+        elif "look" in inp and ("computer" in inp or "pc" in inp):
             display_text(reader, "ChapterI", "computer", True)
 
         elif "look" in inp and "suitcase" in inp:
@@ -66,11 +69,14 @@ def string_parsing1(reader, player):
         elif "look" in inp and "keyboard" in inp:
             display_text(reader, "ChapterI", "keyboard", True)
 
-        elif "look" in inp and ("photograph" in inp or "photo" in inp):
+        elif "look" in inp and ("photograph" in inp or "photo" in inp or "photos" in inp):
             display_text(reader, "ChapterI", "photo", True)
 
         elif "look" in inp and ("cat" in inp or "cats" in inp) and (not("pet" in inp or "wand" in inp)):
             display_text(reader, "ChapterI", "lookCats", True)
+
+        elif "look" in inp and "kitchen" in inp:
+            display_text(reader, "ChapterI", "lookKitchen", True)
 
         elif "look" in inp and "cat" in inp and "wand" in inp:
             if player.get_currentRoom().isItemHere("cat wand"):
@@ -98,6 +104,10 @@ def string_parsing1(reader, player):
         #input not recognised
         else:
             print("\nI can't do that yet")
+
+        #separate if branch or whatever you call it
+        if inpCounter % 10 == 0:
+            giveHint(reader, comp, locked, fridge)
     
     print("\nI should leave now") #placeholder
 
@@ -107,6 +117,16 @@ def pickup(player, item):
     player.get_currentRoom().remove_item(item)
     print("\nYou have picked up the %s!" %(str(item)))
     return player
+
+def giveHint(reader, comp, locked, fridge):
+    time.sleep(3)
+    if not comp:
+        display_text(reader, "ChapterI", "computerHint", True)
+    elif not locked:
+        display_text(reader, "ChapterI", "suitcaseHint", True)
+    elif not fridge:
+        display_text(reader, "ChapterI", "fridgeHint", True)
+
 
 
 
