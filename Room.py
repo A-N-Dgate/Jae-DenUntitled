@@ -53,7 +53,8 @@ def create_room(player, chaptNo):
         case 1:
             name = " Jae's Appartment"
             catWand = Item("cat wand", "used for playing wth my cats.")
-            items = [catWand]
+            paper = Item("paper", "a mess of ideas, unorganised and crammed onto one page")
+            items = [catWand, paper]
 
     room = Room(name, desc, items)
 
