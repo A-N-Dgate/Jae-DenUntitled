@@ -84,10 +84,16 @@ def string_parsing1(reader, player):
                 print("%s"%(str(item)))
 
         #now to add in items:
-        elif "pickup" in inp and ("cat" in inp and "wand" in inp):
-            if player.get_currentRoom().isItemHere("cat wand"):
-                item = player.get_currentRoom().get_item("cat wand")
+        elif "pickup" in inp: # note: this could be made into its own function, esp if there is a chap2
+            itemStr = " ".join(inp[1:])
+            if player.get_currentRoom().isItemHere(itemStr):
+                item = player.get_currentRoom().get_item(itemStr)
                 player = pickup(player, item)
+            else:
+                print("\nYou cannot pickup %s"%(itemStr))
+                inp = itemStr.split(" ")
+                if len(inp) > 2:
+                    print("Tip: remember to only include 'pickup -item-'")
 
         elif "inv" in inp:
             print("\n%s" %(player.show_inv()))
