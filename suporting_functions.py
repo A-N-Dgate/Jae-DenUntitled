@@ -92,9 +92,6 @@ def string_parsing1(reader, player):
                 player = pickup(player, item)
             else:
                 print("\nYou cannot pickup %s"%(itemStr))
-                inp = itemStr.split(" ")
-                if len(inp) > 2:
-                    print("Tip: remember to only include 'pickup -item-'")
 
         elif "inv" in inp:
             print("\n%s" %(player.show_inv()))
