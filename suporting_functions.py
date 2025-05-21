@@ -85,6 +85,7 @@ def string_parsing1(reader, player):
 
         #now to add in items:
         elif "pickup" in inp: # note: this could be made into its own function, esp if there is a chap2
+            inp = removeArticles(inp)
             itemStr = " ".join(inp[1:])
             if player.get_currentRoom().isItemHere(itemStr):
                 item = player.get_currentRoom().get_item(itemStr)
@@ -133,6 +134,11 @@ def giveHint(reader, comp, locked, fridge):
     elif not fridge:
         display_text(reader, "ChapterI", "fridgeHint", True)
 
+def removeArticles(inp):
+    articles = ["a", "the", "an", "some"]
+    returnList = [word for word in inp if word not in articles]
+    return returnList
+# why isn't "not in" in a fun colour :(
 
 
 
