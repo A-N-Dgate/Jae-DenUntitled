@@ -113,7 +113,7 @@ def string_parsing1(reader, player):
         if inpCounter % 10 == 0:
             giveHint(reader, comp, locked, fridge)
     
-    print("\nI should leave now") #placeholder
+    #print("\nI should leave now") #placeholder #I dont think I need this now?
 
 def pickup(player, item):
     player.add_item(item)
