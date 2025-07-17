@@ -116,18 +116,42 @@ def string_parsing1(reader, player):
 def string_parsing2(reader, player):
     end = False
     while not end:
+        obj = None
         time.sleep(3)
         inp = input(">").lower()
         inp = inp.split()
 
-        if "look" in inp:
+        if "quit" in inp:
+            sys.exit()
+
+        elif "inv" in inp:
+            print("\n%s" %(player.show_inv()))
+
+        elif "look" in inp and "floor" in inp:
+            obj = "floor"
+
+        elif "look" in inp and ("tv" in inp and "off" in inp):
+            obj = "tvOff"
+
+        elif "look" in inp and "tv" in inp:
+            obj = "tv"
+
+        elif "look" in inp and "table" in inp:
+            obj = "table"
+        
+        elif "look" in inp:
             print(str(player.get_currentRoom()))
 
-        elif "quit" in inp:
+        elif "go" in inp and ("left" in inp or "door" in inp or "wonpil" in inp or "wonpil's" in inp):
+            obj = "proceed"
             end = True
 
         else:
             print("\nI can't do that yet")
+
+        if obj != None:
+            display_text(reader, "ChapterII", obj, True)
+
 
 def pickupProcedure(player, inp):
     inp = removeArticles(inp)
