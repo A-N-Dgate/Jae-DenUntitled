@@ -13,6 +13,7 @@ def create():
 
 
 def display_text(reader, chapter_name, file_name, para=False, intro=False):
+    #unfortunately, I don't know how to clean this one up
     if intro and not para:
         reader.getReader().load_file("descriptions/chapterIntro/%s.txt"%(chapter_name))
         reader.getReader().readChapt()
@@ -34,6 +35,7 @@ def string_parsing1(reader, player):
     comp = False
     inpCounter = 0
     while not (locked and fridge and comp):
+        obj = None
         time.sleep(3)
         inp = input(">").lower()
         inp = inp.split()
@@ -44,79 +46,63 @@ def string_parsing1(reader, player):
         if "quit" in inp:
             sys.exit()
 
-        #string parsing begins
-        elif "pet" in inp and ("cat" in inp or "cats" in inp):
-            display_text(reader, "ChapterI", "petCats", True)
-
-        elif "suitcase" in inp and not("look" in inp):
-            display_text(reader, "ChapterI", "suitcase")
-            locked = True
-
-        elif "fridge" in inp:
-            display_text(reader, "ChapterI", "fridge", True)
-            fridge = True
-
-        elif "computer" in inp and ("turn" in inp and "off" in inp) and not("look" in inp):
-            display_text(reader, "ChapterI", "computerOff", True)
-            comp = True
-
-        elif "look" in inp and ("computer" in inp or "pc" in inp or "desk" in inp):
-            display_text(reader, "ChapterI", "computer", True)
-
-        elif "look" in inp and "suitcase" in inp:
-            display_text(reader, "ChapterI", "lookSuit", True)
-
-        elif "look" in inp and "keyboard" in inp:
-            display_text(reader, "ChapterI", "keyboard", True)
-
-        elif "look" in inp and ("photograph" in inp or "photo" in inp or "photos" in inp):
-            display_text(reader, "ChapterI", "photo", True)
-
-        elif "look" in inp and ("cat" in inp or "cats" in inp) and (not("pet" in inp or "wand" in inp)):
-            display_text(reader, "ChapterI", "lookCats", True)
-
-        elif "look" in inp and "kitchen" in inp:
-            display_text(reader, "ChapterI", "lookKitchen", True)
-
-        elif "look" in inp and "paper" in inp:
-            if player.get_currentRoom().isItemHere("paper"):
-                item = player.get_currentRoom().get_item("paper")
-                print("\n%s"%(item.show_desc()))
-            else:
-                print("\nIt is now in your invetroy")
-
-        elif "look" in inp and "cat" in inp and "wand" in inp:
-            if player.get_currentRoom().isItemHere("cat wand"):
-                item = player.get_currentRoom().get_item("cat wand")
-                print("\n%s"%(item.show_desc()))
-            else:
-                print("\nIt is now in your inventory")
-
-        #now to add in items:
-        elif "pickup" in inp: # note: this could be made into its own function, esp if there is a chap2
-            inp = removeArticles(inp)
-            itemStr = " ".join(inp[1:])
-            if player.get_currentRoom().isItemHere(itemStr):
-                item = player.get_currentRoom().get_item(itemStr)
-                player = pickup(player, item)
-            else:
-                print("\nYou cannot pickup %s"%(itemStr))
-
         elif "inv" in inp:
             print("\n%s" %(player.show_inv()))
 
+        elif "pickup" in inp: 
+            player = pickupProcedure(player, inp)
+
+        #string parsing begins
+        elif "pet" in inp and ("cat" in inp or "cats" in inp):
+            obj = "PetCats"
+
+        elif "suitcase" in inp and not("look" in inp):
+            obj = "suitcase"
+            locked = True
+
+        elif "fridge" in inp:
+            obj = "fridge"
+            fridge = True
+
+        elif "computer" in inp and ("turn" in inp and "off" in inp) and not("look" in inp):
+            obj = "computerOff"
+            comp = True
+
+        elif "look" in inp and ("computer" in inp or "pc" in inp or "desk" in inp):
+            obj = "computer"
+
+        elif "look" in inp and "suitcase" in inp:
+            obj = "lookSuit"
+
+        elif "look" in inp and "keyboard" in inp:
+            obj = "keyboard"
+
+        elif "look" in inp and ("photograph" in inp or "photo" in inp or "photos" in inp):
+            obj = "photo"
+
+        elif "look" in inp and ("cat" in inp or "cats" in inp) and (not("pet" in inp or "wand" in inp)):
+            obj = "lookCats"
+
+        elif "look" in inp and "kitchen" in inp:
+            obj = "lookKitchen"
+
+        elif "look" in inp and "paper" in inp:
+            print(showItem(player, "paper"))
+
+        elif "look" in inp and "cat" in inp and "wand" in inp:
+            print(showItem(player, "cat wand"))
+
+        #boolean logic: look needs to be at the end
         elif "look" in inp:
             print(str(player.get_currentRoom()))
-
-
-
-        #a sneeky test
-        elif "test" in inp:
-            display_text(reader, "ChapterI", "test")
 
         #input not recognised
         else:
             print("\nI can't do that yet")
+
+        #another separate branch added after the tip one
+        if obj != None:
+            display_text(reader, "ChapterI", obj, True)
 
         #separate if branch or whatever you call it
         if inpCounter % 10 == 0:
@@ -143,6 +129,23 @@ def string_parsing2(reader, player):
         else:
             print("\nI can't do that yet")
 
+def pickupProcedure(player, inp):
+    inp = removeArticles(inp)
+    itemStr = " ".join(inp[1:])
+    if player.get_currentRoom().isItemHere(itemStr):
+        item = player.get_currentRoom().get_item(itemStr)
+        player = pickup(player, item)
+    else:
+        print("\nYou cannot pickup %s"%(itemStr))
+
+    return player
+
+def showItem(player, itemName):
+    if player.get_currentRoom().isItemHere(itemName):
+        item = player.get_currentRoom().get_item(itemName)
+        return "\n%s"%(item.show_desc())
+    else:
+        return "\nIt is now in your inventory"
 
 def pickup(player, item):
     player.add_item(item)
