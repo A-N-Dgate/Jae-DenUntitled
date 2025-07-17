@@ -60,7 +60,7 @@ def string_parsing1(reader, player):
             display_text(reader, "ChapterI", "computerOff", True)
             comp = True
 
-        elif "look" in inp and ("computer" in inp or "pc" in inp):
+        elif "look" in inp and ("computer" in inp or "pc" in inp or "desk" in inp):
             display_text(reader, "ChapterI", "computer", True)
 
         elif "look" in inp and "suitcase" in inp:
@@ -77,6 +77,9 @@ def string_parsing1(reader, player):
 
         elif "look" in inp and "kitchen" in inp:
             display_text(reader, "ChapterI", "lookKitchen", True)
+
+        elif "look" in inp and "paper" in inp:
+            display_text(reader, "ChapterI", "paper", True)
 
         elif "look" in inp and "cat" in inp and "wand" in inp:
             if player.get_currentRoom().isItemHere("cat wand"):
@@ -111,8 +114,10 @@ def string_parsing1(reader, player):
 
         #separate if branch or whatever you call it
         if inpCounter % 10 == 0:
+            time.sleep(3)
             giveHint(reader, comp, locked, fridge)
-    
+
+    time.sleep(3)
     display_text(reader, "ChapterI", "exit")
     time.sleep(3)
 
