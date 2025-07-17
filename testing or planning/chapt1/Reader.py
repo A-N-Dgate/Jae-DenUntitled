@@ -24,10 +24,19 @@ class Reader():
     def readChapt(self):
         """
         Method which displays paragraphs of text onto the screen.
+        also includes a time between displaying each line.
         """
         for line in self.get_file():
             print(line)
             time.sleep(3)
+
+    def readParag(self):
+        """
+        Method which displays text in a paragraph, without the timeout.
+        """
+        text = combineText(self.get_file())
+        print(text)
+        
 
     def readLine(self):
         """
@@ -53,3 +62,14 @@ class globalReader():
 
     def getReader(self):
         return self.reader
+
+
+def combineText(fileIttr):
+    #this can be used outside of the class
+    lines = []
+    for line in fileIttr:
+        lines.append("\n%s"%(line.rstrip()))
+    #combine into one string
+    text = "".join(lines)
+
+    return text

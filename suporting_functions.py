@@ -115,6 +115,20 @@ def string_parsing1(reader, player):
     
     #print("\nI should leave now") #placeholder #I dont think I need this now?
 
+def string_parsing2(reader, player):
+    end = False
+    while not end:
+        time.sleep(3)
+        inp = input(">").lower()
+        inp = inp.split()
+
+        if "look" in inp:
+            print(str(player.get_currentRoom()))
+
+        elif "quit" in inp:
+            end = True
+
+
 def pickup(player, item):
     player.add_item(item)
     item.picked_up()

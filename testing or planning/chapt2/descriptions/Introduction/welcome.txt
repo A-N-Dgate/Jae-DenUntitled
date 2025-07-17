@@ -1,0 +1,17 @@
+=======================================ALPHA TEST======================================
+
+Hello and welcome to the game!
+This game is going to be a lot more then what this test shows, 
+but I wanted to make sure at least this first part made sense.
+If you are new to the gnere of this game its a text based adventure
+and will move onto a 2d bullet hell fighter (undertale-esq).
+
+focusing on the text adventure bit, this section is meant to be
+a bit abstract, and so this test is here to see what kind of 
+adjustments I need to make to make this harder or easier.
+
+looking at your interface right now, this should be running in the
+windows command prompt. If so, to adjust your playing experience, 
+--------right click on the upper bar (with the file directory)
+--------left click properties
+from here you can select font sizes and font; adjust to your preference.
