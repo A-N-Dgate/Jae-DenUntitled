@@ -113,7 +113,8 @@ def string_parsing1(reader, player):
         if inpCounter % 10 == 0:
             giveHint(reader, comp, locked, fridge)
     
-    #print("\nI should leave now") #placeholder #I dont think I need this now?
+    display_text(reader, "ChapterI", "exit")
+    time.sleep(3)
 
 def string_parsing2(reader, player):
     end = False
@@ -127,6 +128,9 @@ def string_parsing2(reader, player):
 
         elif "quit" in inp:
             end = True
+
+        else:
+            print("\nI can't do that yet")
 
 
 def pickup(player, item):
