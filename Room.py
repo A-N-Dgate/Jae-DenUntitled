@@ -52,7 +52,7 @@ def create_room(player, chaptNo):
         case 1:
             name = " Jae's Appartment"
             catWand = Item("cat wand", "used for playing wth my cats.")
-            paper = Item("paper", "a mess of ideas, unorganised and crammed onto one page")
+            paper = Item("paper", "seems like some sort of music notes I can't make out \nat all \nwhat was I thinking? \n...but it might be usefull to take with me.")
             items = [catWand, paper]
         case 2:
             name = " The Day6 Dorm"

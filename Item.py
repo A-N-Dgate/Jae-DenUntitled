@@ -27,7 +27,7 @@ class Item():
         """
         returning the description of the item.
         """
-        return "%s\n%s" %(self.get_name(),self.get_desc())
+        return " %s\n%s" %(self.get_name(),self.get_desc())
 
     def __str__(self):
         return self.get_name()
