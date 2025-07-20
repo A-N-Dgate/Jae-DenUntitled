@@ -115,6 +115,7 @@ def string_parsing1(reader, player):
 
 def string_parsing2(reader, player):
     end = False
+    #maybe add in booleans for sections of the game being completed?
     while not end:
         obj = None
         time.sleep(3)
@@ -130,9 +131,6 @@ def string_parsing2(reader, player):
         elif "look" in inp and "floor" in inp:
             obj = "floor"
 
-        elif "look" in inp and ("tv" in inp and "off" in inp):
-            obj = "tvOff"
-
         elif "look" in inp and "tv" in inp:
             obj = "tv"
 
@@ -145,6 +143,12 @@ def string_parsing2(reader, player):
         elif "go" in inp and ("left" in inp or "door" in inp or "wonpil" in inp or "wonpil's" in inp):
             obj = "proceed"
             end = True
+
+        elif "go" in inp: #maybe leaving it non-specific will help not to write a lot of "or"s 
+            obj = "cant"
+
+        elif "tv" in inp and "off" in inp:
+            obj = "tvOff"
 
         else:
             print("\nI can't do that yet")
