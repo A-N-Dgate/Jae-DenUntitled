@@ -36,8 +36,9 @@ class Room():
         for item in self.get_items():
             if item.get_name() == itemStr:
                 return item
-
-
+            
+    def add_item(self, itemObj):
+        self.items.append(itemObj)
 
     def __str__(self):
         return "\n %s%s" %(self.get_name(), self.get_desc())

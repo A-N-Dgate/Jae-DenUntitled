@@ -116,6 +116,7 @@ def string_parsing1(reader, player):
 def string_parsing2(reader, player):
     end = False
     #maybe add in booleans for sections of the game being completed?
+    #  so that it returns here after each battle?
     while not end:
         obj = None
         time.sleep(3)
@@ -128,14 +129,24 @@ def string_parsing2(reader, player):
         elif "inv" in inp:
             print("\n%s" %(player.show_inv()))
 
+        elif "pickup" in inp: 
+            player = pickupProcedure(player, inp)
+
+        #^These repeated ones should be in their own method at some point
+
         elif "look" in inp and "floor" in inp:
             obj = "floor"
+            newItem = Item("fluff", "a mysterious piece of white stuffing, a clue maybe?")
+            player.get_currentRoom().add_item(newItem)
 
         elif "look" in inp and "tv" in inp:
             obj = "tv"
 
         elif "look" in inp and "table" in inp:
             obj = "table"
+
+        elif "look" and ("fluff" in inp or "stuffing" in inp):
+            print(showItem(player, "fluff"))
         
         elif "look" in inp:
             print(str(player.get_currentRoom()))
@@ -153,6 +164,7 @@ def string_parsing2(reader, player):
         else:
             print("\nI can't do that yet")
 
+        #sepreate if branch/chain
         if obj != None:
             display_text(reader, "ChapterII", obj, True)
 
