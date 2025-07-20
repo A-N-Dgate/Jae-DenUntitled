@@ -3,5 +3,5 @@ from Character import *
 
 player, reader = create()
 #Introduction()
-#Chapter1(reader, player) 
+Chapter1(reader, player) 
 Chapter2(reader, player)
