@@ -8,7 +8,8 @@ import sys
 def create():
     reader = globalReader()
     player = Character()
-    player = create_room(player, 1) #change to generic later? maybe not needed
+    chapter = 1
+    player = create_room(player, chapter) 
     return player, reader
 
 
@@ -39,6 +40,7 @@ def string_parsing1(reader, player):
         time.sleep(3)
         inp = input(">").lower()
         inp = inp.split()
+        isParagraph = True
 
         inpCounter += 1                                                                                                                                             
 
@@ -74,7 +76,7 @@ def string_parsing1(reader, player):
         elif "look" in inp and "suitcase" in inp:
             obj = "lookSuit"
 
-        elif "look" in inp and "keyboard" in inp:
+        elif "look" in inp and ("keyboard" in inp or "piano" in inp):
             obj = "keyboard"
 
         elif "look" in inp and ("photograph" in inp or "photo" in inp or "photos" in inp):
@@ -102,7 +104,7 @@ def string_parsing1(reader, player):
 
         #another separate branch added after the tip one
         if obj != None:
-            display_text(reader, "ChapterI", obj, True)
+            display_text(reader, "chapterI", obj, isParagraph)
 
         #separate if branch or whatever you call it
         if inpCounter % 10 == 0:
@@ -122,6 +124,7 @@ def string_parsing2(reader, player):
         time.sleep(3)
         inp = input(">").lower()
         inp = inp.split()
+        isParagraph = True
 
         if "quit" in inp:
             sys.exit()
@@ -166,7 +169,7 @@ def string_parsing2(reader, player):
 
         #sepreate if branch/chain
         if obj != None:
-            display_text(reader, "ChapterII", obj, True)
+            display_text(reader, "ChapterII", obj, isParagraph)
 
 
 def pickupProcedure(player, inp):
@@ -195,13 +198,14 @@ def pickup(player, item):
     return player
 
 def giveHint(reader, comp, locked, fridge):
+    isParagraph = True
     time.sleep(3)
     if not comp:
-        display_text(reader, "ChapterI", "computerHint", True)
+        display_text(reader, "ChapterI", "computerHint", isParagraph)
     elif not locked:
-        display_text(reader, "ChapterI", "suitcaseHint", True)
+        display_text(reader, "ChapterI", "suitcaseHint", isParagraph)
     elif not fridge:
-        display_text(reader, "ChapterI", "fridgeHint", True)
+        display_text(reader, "ChapterI", "fridgeHint", isParagraph)
 
 def removeArticles(inp):
     articles = ["a", "the", "an", "some"]
