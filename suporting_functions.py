@@ -145,7 +145,7 @@ def string_parsing2(reader, player):
         elif "look" in inp and "tv" in inp:
             obj = "tv"
 
-        elif "look" in inp and "table" in inp:
+        elif "look" in inp and "table" in inp and "clean" not in inp:
             obj = "table"
 
         elif "look" and ("fluff" in inp or "stuffing" in inp):
@@ -163,6 +163,9 @@ def string_parsing2(reader, player):
 
         elif "tv" in inp and "off" in inp:
             obj = "tvOff"
+
+        elif "clean" in inp and ("table" in inp or "floor" in inp):
+            obj = "clean"
 
         else:
             print("\nI can't do that yet")
