@@ -3,7 +3,7 @@ import pygame
 from pygame.locals import *
 
 class my_sprite(pygame.sprite.Sprite):
-    def __init__(self, target):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.master_image = None
         self.image = None
