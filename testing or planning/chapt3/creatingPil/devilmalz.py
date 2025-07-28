@@ -10,7 +10,7 @@ class Devilmalz(my_sprite):
     #attack def values 
     #
     def __init__(self):
-        my_sprite.__init__()
+        super().__init__()
 
     #based on the spritesheet I was making earlier
     def default(self):
@@ -22,16 +22,17 @@ class Devilmalz(my_sprite):
         """attack animation cycle"""
         #note: need to double check fighter to see how returning to default works
         self.frame = 4
-        self.last_frame = 8
+        self.last_frame = 6
 
     def hit(self):
         """devilmalz getting hit animation cycle"""
-        self.frame = 9
-        self.last_frame = 11
+        self.frame = 7
+        self.last_frame = 10
 
     def defeated(self):
         """devilmalz defeated animation cylce"""
-        pass
+        self.frame = 11
+        self.last_frame = 17
 
 
 
@@ -41,4 +42,7 @@ class Pil(Devilmalz):
     #attack patterns 
     #need probably a class + subclasses for the bullets - problem for later
     def __init__(self):
-        pass
+        super().__init__()
+        self.load("spritesheets/pil.png", 128, 128, 18) #magic numbers?
+
+    #testing animation here so I don't think there's much else to do 

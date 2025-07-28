@@ -12,8 +12,9 @@ class my_sprite(pygame.sprite.Sprite):
         self.frame_width = 1
         self.frame_height = 1
         self.first_frame = 0
-        self.columns = 1
         self.last_frame = 0
+        self.columns = 1
+        self.last_time = 0
 
     #I don't think the devilmalz need to move, but I'll keep these here for now
     def get_x(self): return self.rect.x
@@ -35,6 +36,7 @@ class my_sprite(pygame.sprite.Sprite):
         #again, not sure if I need the x and y bc the devilmalz will stay in place
         #--removed x and y from method
         if current_time > self.last_time + rate:
+            #print("frame updated")
             self.frame += 1
             if self.frame > self.last_frame:
                 self.frame = self.first_frame
@@ -47,9 +49,11 @@ class my_sprite(pygame.sprite.Sprite):
             frame_y = (self.frame // self.columns) * self.frame_height
             self.rect = Rect(frame_x, frame_y, self.frame_width, self.frame_height)
             self.image = self.master_image.subsurface(self.rect)
-            self.old_frame = self.frame #so then if the frame changes, they are different
+            self.old_frame = self.frame 
 
-        #there should be a set x and set y here but its not needed
+        self.set_x(0)
+        self.set_y(0)
+        #so that the frames are in the right place
 
 
 
