@@ -9,8 +9,8 @@ class Devilmalz(my_sprite):
     #all the devilmalz should have the same animation cycle
     #attack def values 
     #
-    def __init__(self):
-        super().__init__()
+    def __init__(self, target):
+        super().__init__(target)
 
     #based on the spritesheet I was making earlier
     def default(self):
@@ -20,7 +20,6 @@ class Devilmalz(my_sprite):
 
     def attack(self):
         """attack animation cycle"""
-        #note: need to double check fighter to see how returning to default works
         self.frame = 4
         self.last_frame = 6
 
@@ -35,14 +34,12 @@ class Devilmalz(my_sprite):
         self.last_frame = 17
 
 
-
-
 class Pil(Devilmalz):
     #loads their own spritesheet + anything else
     #attack patterns 
     #need probably a class + subclasses for the bullets - problem for later
-    def __init__(self):
-        super().__init__()
+    def __init__(self, target):
+        super().__init__(target)
         self.load("spritesheets/pil.png", 128, 128, 18) #magic numbers?
 
     #testing animation here so I don't think there's much else to do 

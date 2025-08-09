@@ -11,10 +11,11 @@ if __name__ == "__main__":
     pygame.display.set_caption("animation test for PIL")
     framerate = pygame.time.Clock()
     
-    pil = Pil()
-    #pil.default()
-    group = pygame.sprite.Group() #capital or object lower for method?
+    pil = Pil(screen)
+    group = pygame.sprite.Group() #capital for object lower for method?
     group.add(pil)
+
+    pil.default()
 
     while True:
         framerate.tick(30)
@@ -34,7 +35,7 @@ if __name__ == "__main__":
 
         #all I need to do is update Pil? 
         screen.fill((0,0,255))
-        pil.update(ticks, 30)
+        group.update(ticks, 500) #makes no differnce if its pil or group
         group.draw(screen)
         
         pygame.display.update()

@@ -3,7 +3,7 @@ import pygame
 from pygame.locals import *
 
 class my_sprite(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, target):
         pygame.sprite.Sprite.__init__(self)
         self.master_image = None
         self.image = None
@@ -26,7 +26,7 @@ class my_sprite(pygame.sprite.Sprite):
     def load(self, filename, width, height, columns):
         #so this will be in the init of the devilmalz
         self.master_image = pygame.image.load(filename).convert_alpha()
-        self.rect = Rect(0, 0, width, height) #magic numbers?
+        self.rect = Rect(0, 0, width, height)
         self.image = self.master_image.subsurface(self.rect)
         self.frame_width = width
         self.frame_height = height
@@ -35,8 +35,9 @@ class my_sprite(pygame.sprite.Sprite):
     def update(self, current_time, rate): 
         #again, not sure if I need the x and y bc the devilmalz will stay in place
         #--removed x and y from method
+        self.old_frame = self.frame - 1
         if current_time > self.last_time + rate:
-            #print("frame updated")
+            #this section is being entered
             self.frame += 1
             if self.frame > self.last_frame:
                 self.frame = self.first_frame
@@ -52,7 +53,7 @@ class my_sprite(pygame.sprite.Sprite):
             self.old_frame = self.frame 
 
         self.set_x(0)
-        self.set_y(0)
+        self.set_y(0) 
         #so that the frames are in the right place
 
 
