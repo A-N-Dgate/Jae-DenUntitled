@@ -37,7 +37,6 @@ class my_sprite(pygame.sprite.Sprite):
         #--removed x and y from method
         self.old_frame = self.frame - 1
         if current_time > self.last_time + rate:
-            #this section is being entered
             self.frame += 1
             if self.frame > self.last_frame:
                 self.frame = self.first_frame

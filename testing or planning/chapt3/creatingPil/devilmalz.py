@@ -11,27 +11,57 @@ class Devilmalz(my_sprite):
     #
     def __init__(self, target):
         super().__init__(target)
+        self.animating = False
+
+    def update(self, current_time, rate):
+        #overwrite the method in the super-class: polymorphism
+        self.old_frame = self.frame - 1
+        if current_time > self.last_time + rate:
+            #this section is being entered
+            self.frame += 1
+            if self.frame > self.last_frame:
+                if self.animating:
+                    self.default()
+                else:
+                    self.frame = self.first_frame
+            self.last_time = current_time 
+
+        #build on current frame, only if it has been changed
+        if self.frame != self.old_frame:
+            #gets current frame by covering up the master image
+            frame_x = (self.frame % self.columns) * self.frame_width
+            frame_y = (self.frame // self.columns) * self.frame_height
+            self.rect = Rect(frame_x, frame_y, self.frame_width, self.frame_height)
+            self.image = self.master_image.subsurface(self.rect)
+            self.old_frame = self.frame 
+
+        self.set_x(0)
+        self.set_y(0) 
 
     #based on the spritesheet I was making earlier
     def default(self):
         """The default animation cycle"""
         self.frame = 0
         self.last_frame = 3
+        self.animating = False
 
     def attack(self):
         """attack animation cycle"""
         self.frame = 4
         self.last_frame = 6
+        self.animating = True
 
     def hit(self):
         """devilmalz getting hit animation cycle"""
         self.frame = 7
         self.last_frame = 10
+        self.animating = True
 
     def defeated(self):
         """devilmalz defeated animation cylce"""
         self.frame = 11
         self.last_frame = 17
+        self.animating = True
 
 
 class Pil(Devilmalz):
