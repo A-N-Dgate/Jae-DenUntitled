@@ -1,5 +1,6 @@
 import pygame, sys
 from devilmalz import *
+from select_sprites import *
 
 if __name__ == "__main__":
     pygame.init()
@@ -8,11 +9,17 @@ if __name__ == "__main__":
     framerate = pygame.time.Clock()
 
     pil = Pil(screen)
-    group = pygame.sprite.Group()
-    group.add(pil)
+    fight = Fight(screen)
+
+    pilGroup = pygame.sprite.Group()
+    selectGroup = pygame.sprite.Group()
+
+    pilGroup.add(pil)
+    selectGroup.add(fight)
     pil.default()
 
     background = pygame.image.load("spritesheets/background.png")
+    mouse_x = mouse_y = 0
 
     while True:
         framerate.tick(30)
@@ -23,11 +30,18 @@ if __name__ == "__main__":
                 pygame.quit()
                 sys.exit()
 
+            if event.type == pygame.MOUSEMOTION:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+
         #key press loop would go here
 
         screen.blit(background, (0,0))
-        group.update(ticks, 500)
-        group.draw(screen)
+        pil.update(ticks, 500) #need to also make that a constant
+        fight.update(mouse_x, mouse_y)
+
+        pilGroup.draw(screen)
+        selectGroup.draw(screen)
+
 
         pygame.display.update()
 
