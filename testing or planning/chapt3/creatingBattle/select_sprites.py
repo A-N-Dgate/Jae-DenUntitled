@@ -30,14 +30,37 @@ class selection_sprite(pygame.sprite.Sprite):
         self.image = self.master_image.subsurface(self.image_rect)
         self.image_rect = pygame.Rect((self.width * self.frame), 0, self.width, self.height)
 
-class Fight(selection_sprite):
+class Fight_sel(selection_sprite):
     def __init__(self, screen):
         X_VALUE = 170
-        Y_VALUE = 450
+        Y_VALUE = 430
         IMAGE_PATH = "spritesheets/fight.png"
         super().__init__(screen, IMAGE_PATH, X_VALUE, Y_VALUE)
         self.width = 200
         self.height = 100
         self.rect = pygame.Rect(X_VALUE, Y_VALUE, self.width, self.height)
+
+
+class Item_sel(selection_sprite):
+    def __init__(self, screen):
+        X_VALUE = 170
+        Y_VALUE = 620
+        IMAGE_PATH = "spritesheets/item.png"
+        super().__init__(screen, IMAGE_PATH, X_VALUE, Y_VALUE)
+        self.width = 200
+        self.height = 100
+        self.rect = pygame.Rect(X_VALUE, Y_VALUE, self.width, self.height)
+
+
+class Talk_sel(selection_sprite):
+    def __init__(self, screen):
+        X_VALUE = 1040
+        Y_VALUE = 500
+        IMAGE_PATH = "spritesheets/talk.png"
+        super().__init__(screen, IMAGE_PATH, X_VALUE, Y_VALUE)
+        self.width = 200
+        self.height = 100
+        self.rect = pygame.Rect(X_VALUE, Y_VALUE, self.width, self.height)
+
 
         

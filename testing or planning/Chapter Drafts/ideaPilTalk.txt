@@ -1,0 +1,4 @@
+organise dialouge into folders
+have a counter 
+each file is a number for the order
+then have a random folder when the original dialogue is exhausted

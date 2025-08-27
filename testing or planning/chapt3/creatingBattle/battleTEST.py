@@ -9,13 +9,17 @@ if __name__ == "__main__":
     framerate = pygame.time.Clock()
 
     pil = Pil(screen)
-    fight = Fight(screen)
+    fight = Fight_sel(screen)
+    item = Item_sel(screen)
+    talk = Talk_sel(screen)
 
     pilGroup = pygame.sprite.Group()
     selectGroup = pygame.sprite.Group()
 
     pilGroup.add(pil)
     selectGroup.add(fight)
+    selectGroup.add(item)
+    selectGroup.add(talk)
     pil.default()
 
     background = pygame.image.load("spritesheets/background.png")
@@ -37,7 +41,7 @@ if __name__ == "__main__":
 
         screen.blit(background, (0,0))
         pil.update(ticks, 500) #need to also make that a constant
-        fight.update(mouse_x, mouse_y)
+        selectGroup.update(mouse_x, mouse_y)
 
         pilGroup.draw(screen)
         selectGroup.draw(screen)
