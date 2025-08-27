@@ -44,6 +44,4 @@ class Writer():
         file = open(filepath)
         for line in file:
             lines.append(line)
-
-        return lines
-           
+        return lines    
