@@ -33,6 +33,6 @@ if __name__ == "__main__":
         
         screen.blit(background, (0,0))
         writer.display_text(colour=(223,148,243))
-        #pygame.draw.rect(screen, (0,0,255), writer.rect, width=3)
+        pygame.draw.rect(screen, (0,0,255), writer.rect, width=3)
 
         pygame.display.update()
