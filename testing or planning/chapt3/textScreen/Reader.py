@@ -1,4 +1,4 @@
-import time, pygame
+import time
 
 class Reader():
     """

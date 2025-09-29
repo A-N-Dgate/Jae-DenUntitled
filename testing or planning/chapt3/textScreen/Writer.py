@@ -29,9 +29,11 @@ class Writer():
         """
         font = pygame.font.Font("fonts/VT323.ttf", 50)
         line_no = 0
+        SPACE_FROM_EDGE = 20
+        NEXT_LINE_SPACE = 50
         for line in self.text:
             imgText = font.render(line, True, colour)
-            self.screen.blit(imgText, ((self.rect.x + 5),(self.rect.y + (line_no*50))))
+            self.screen.blit(imgText, ((self.rect.x + SPACE_FROM_EDGE),(self.rect.y + (line_no*NEXT_LINE_SPACE))))
             line_no += 1
 
     def get_text(self, filepath):
