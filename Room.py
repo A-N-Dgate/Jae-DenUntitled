@@ -17,15 +17,23 @@ class Room():
 
     def remove_item(self, item):
         """
-        removes an item from the room's item pool
+        removes an item from the room's item pool.
+        :param item: item object.
         """
         if item in self.get_items():
             self.get_items().remove(item)
 
     def isItemEmpty(self):
+        """
+        checks if there are any items in the room.
+        """
         return not self.get_items() #if list = true when list len > 0
     
     def isItemHere(self, itemStr):
+        """
+        checks if a specific item is in the room.
+        :param itemStr: string name of the item tha tis being checked.
+        """
         for item in self.get_items():
             if item.get_name() == itemStr:
                 return True
@@ -33,11 +41,20 @@ class Room():
         #clean up?
 
     def get_item(self, itemStr):
+        """
+        retrieve an item object in the room from the string.
+        :param itemStr: string name of the item needed.
+        :returns item: the item object corresponding to the string.
+        """
         for item in self.get_items():
             if item.get_name() == itemStr:
                 return item
             
     def add_item(self, itemObj):
+        """
+        add an item to the room.
+        :param itemObj: Item object that needs to be added.
+        """
         self.items.append(itemObj)
 
     def __str__(self):

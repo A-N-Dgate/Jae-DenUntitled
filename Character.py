@@ -25,6 +25,10 @@ class Character():
     #if it is more efficient
 
     def show_inv(self): 
+        """
+        shows what is in the character's inventory.
+        :returns string: string of the items, or saying that they don't have any.
+        """
         if self.get_itemNo() == 0:
             return "You currently don't have any items"
         else:
@@ -32,6 +36,10 @@ class Character():
             return "The items currently in your inventory are: \n%s" %(itemsStr)
 
     def add_item(self, item):
+        """
+        method used for adding an item to the character's inventory.
+        :param item: item object that wants the be picked up.
+        """
         if not self.__isFull():
             #add item
             self.items[self.get_itemNo()] = item
@@ -42,7 +50,8 @@ class Character():
 
     def drop_item(self, item):
         """
-        removing an item from the item list
+        removing an item from the item list.
+        :param item: item object that needs to be removed.
         """
         if item in self.get_items():
             self.get_items().remove(item)
