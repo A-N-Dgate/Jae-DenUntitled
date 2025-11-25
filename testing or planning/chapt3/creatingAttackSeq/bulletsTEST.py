@@ -7,10 +7,10 @@ if __name__ == "__main__":
     pygame.display.set_caption("Bullet test")
     framerate = pygame.time.Clock()
 
-    #sprites, objects and groups 
-    bullet = Bullets(screen)
-    bulletGroup = pygame.sprite.Group()
-    bulletGroup.add(bullet)
+    RATE = 500
+
+    #sprites, objects and groups
+    bullet_group = BulletsGroup(screen)
     
     background = pygame.image.load("spritesheets/background.png")
 
@@ -26,8 +26,8 @@ if __name__ == "__main__":
 
 
         screen.blit(background, (0,0))
-        bulletGroup.update(ticks, 500)
-
-        bulletGroup.draw(screen)
+        
+        bullet_group.update(ticks, RATE)
+        bullet_group.draw()
 
         pygame.display.update() 
