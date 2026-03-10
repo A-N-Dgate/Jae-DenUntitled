@@ -69,7 +69,6 @@ class BulletsGroup(): # I don't think this is a sprite clas itself? it contains 
 
     def draw(self):
         self.group.draw(self.screen)
-
         
 
 
