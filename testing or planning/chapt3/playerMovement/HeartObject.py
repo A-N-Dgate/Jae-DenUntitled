@@ -3,11 +3,14 @@ import pygame
 class HeartObject(pygame.sprite.Sprite):
     def __init__(self, player):
         pygame.sprite.Sprite.__init__(self)
+        CENTER_X = 689
+        CENTER_Y = 547
         self.player = player
         self.image = pygame.image.load("spritesheets/heart.png")
         self.rect = self.image.get_rect()
         self.health = 50
-        self.rect.x = self.rect.y = 100
+        self.rect.x = CENTER_X
+        self.rect.y = CENTER_Y
         self.__MOVE_PIXELS = 3
 
     def get_player(self): return self.player
