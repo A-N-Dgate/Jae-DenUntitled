@@ -34,15 +34,14 @@ if __name__ == "__main__":
                 sys.exit()
             
             user_input = pygame.key.get_pressed()
-            if box.within_rect(heart):
-                if user_input[pygame.K_w]:
-                    heart.move_up()
-                if user_input[pygame.K_s]:
-                    heart.move_down()
-                if user_input[pygame.K_d]:
-                    heart.move_right()
-                if user_input[pygame.K_a]:
-                    heart.move_left()
+            if user_input[pygame.K_w]:
+                heart.move_up()
+            if user_input[pygame.K_s]:
+                heart.move_down()
+            if user_input[pygame.K_d]:
+                heart.move_right()
+            if user_input[pygame.K_a]:
+                heart.move_left()
 
             #boundcheck - this will be a function so the constants will be declared before the loop here
             # but in the method it'll be before these if statements

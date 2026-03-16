@@ -11,7 +11,7 @@ class HeartObject(pygame.sprite.Sprite):
         self.health = 50
         self.rect.x = CENTER_X
         self.rect.y = CENTER_Y
-        self.__MOVE_PIXELS = 3
+        self.__MOVE_PIXELS = 5
 
     def get_player(self): return self.player
     def get_image(self): return self.image
