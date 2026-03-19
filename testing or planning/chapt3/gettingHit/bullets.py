@@ -16,7 +16,7 @@ class Bullets(my_sprite):
         self.angle = 90
         self.rotation_angle = 0 
         self.inverse = random.choice([True, False])
-        self.set_y(random.randint(100,300)) 
+        self.set_y(random.randint(200,300)) 
         self.dTheta = random.uniform(1,3)
         self.rect = self.image.get_rect()
 
@@ -37,7 +37,7 @@ class Bullets(my_sprite):
             self.get_y() < 0): #proabably need to simplify this
             self.kill()
 
-        MULTIPLIER = 8   #speed and size of the circle (not exactly)
+        MULTIPLIER = 9   #speed and size of the circle (not exactly)
         TOTAL_DEGREES = 360
         
         self.angle = (self.angle - self.dTheta) % TOTAL_DEGREES

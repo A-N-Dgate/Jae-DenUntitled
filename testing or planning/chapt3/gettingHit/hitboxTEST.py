@@ -57,7 +57,12 @@ if __name__ == "__main__":
                 heart.set_x(X_BOUND)
 
         if heart.check_hit(bullet_group):
-            print("hit")
+            heart.hit()
+            print("heart hit, remaining health: %s"%(heart.get_health()))
+            if heart.check_dead():
+                pygame.quit()
+                sys.exit()
+
 
         #screen display
         screen.blit(background, (0,0))

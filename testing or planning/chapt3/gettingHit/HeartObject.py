@@ -1,6 +1,9 @@
 import pygame
 
 class HeartObject(pygame.sprite.Sprite):
+    """
+    Class representing the 2d form of the player
+    """
     def __init__(self, player):
         pygame.sprite.Sprite.__init__(self)
         CENTER_X = 689
@@ -43,10 +46,22 @@ class HeartObject(pygame.sprite.Sprite):
         #pass
 
     def check_hit(self, projectileGroup):
+        """
+        Check if the heart had collided wih any projectiles.
+        :param projectileGroup: container class for a pygame sprite group.
+        :returns boolean: whether heart hit something or not.
+        """
         return pygame.sprite.spritecollideany(self, projectileGroup.get_group())
 
     def hit(self):
-        pass
+        """
+        Decreases the health by a fixed amount.
+        """
+        self.set_health(self.get_health() - 3)
 
     def check_dead(self):
-        pass
+        """
+        Checks if the heart's health is below 0.
+        :returns bool: whether health is below 0.
+        """
+        return self.get_health() < 0
