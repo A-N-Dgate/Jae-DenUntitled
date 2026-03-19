@@ -42,8 +42,8 @@ class HeartObject(pygame.sprite.Sprite):
     #def draw(self): #need to check if this needs to be here?
         #pass
 
-    def check_hit(self, projectile):
-        pass
+    def check_hit(self, projectileGroup):
+        return pygame.sprite.spritecollideany(self, projectileGroup.get_group())
 
     def hit(self):
         pass
