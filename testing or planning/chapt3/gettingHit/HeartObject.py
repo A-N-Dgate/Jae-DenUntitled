@@ -1,3 +1,4 @@
+from Healthbar import *
 import pygame
 
 class HeartObject(pygame.sprite.Sprite):
@@ -12,6 +13,7 @@ class HeartObject(pygame.sprite.Sprite):
         self.image = pygame.image.load("spritesheets/heart.png")
         self.rect = self.image.get_rect()
         self.health = 50
+        self.healthbar = Healthbar(self)
         self.rect.x = CENTER_X
         self.rect.y = CENTER_Y
         self.__MOVE_PIXELS = 5
@@ -20,6 +22,7 @@ class HeartObject(pygame.sprite.Sprite):
     def get_image(self): return self.image
     def get_rect(self): return self.rect
     def get_health(self): return self.health
+    def get_healthbar(self): return self.healthbar
     def get_x(self): return self.rect.x
     def get_y(self): return self.rect.y
 
@@ -58,6 +61,7 @@ class HeartObject(pygame.sprite.Sprite):
         Decreases the health by a fixed amount.
         """
         self.set_health(self.get_health() - 3)
+        self.get_healthbar().set_health_rect()
 
     def check_dead(self):
         """

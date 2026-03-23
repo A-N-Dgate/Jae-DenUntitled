@@ -58,7 +58,6 @@ if __name__ == "__main__":
 
         if heart.check_hit(bullet_group):
             heart.hit()
-            print("heart hit, remaining health: %s"%(heart.get_health()))
             if heart.check_dead():
                 pygame.quit()
                 sys.exit()
@@ -72,6 +71,8 @@ if __name__ == "__main__":
 
         bullet_group.update(ticks, RATE)
         bullet_group.draw()
+
+        heart.get_healthbar().draw(screen)
 
 
         pygame.display.update()
