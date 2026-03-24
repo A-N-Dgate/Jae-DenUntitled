@@ -1,5 +1,5 @@
 from Healthbar import *
-import pygame
+import pygame, time
 
 class HeartObject(pygame.sprite.Sprite):
     """
@@ -29,6 +29,7 @@ class HeartObject(pygame.sprite.Sprite):
     def set_health(self, value): self.health = value
     def set_x(self, value): self.rect.x = value
     def set_y(self, value): self.rect.y = value
+    def set_dead_image(self): self.image = pygame.image.load("spritesheets/heartDead.png")
 
     def move_right(self):
         self.set_x(self.get_x() + self.__MOVE_PIXELS)
@@ -44,9 +45,6 @@ class HeartObject(pygame.sprite.Sprite):
 
     def update(self):
         pygame.sprite.Sprite.update(self)
-
-    #def draw(self): #need to check if this needs to be here?
-        #pass
 
     def check_hit(self, projectileGroup):
         """
@@ -69,3 +67,9 @@ class HeartObject(pygame.sprite.Sprite):
         :returns bool: whether health is below 0.
         """
         return self.get_health() < 0
+    
+    def dead(self):
+        """
+        Simple animation for when the heart dies.
+        """
+        self.set_dead_image()

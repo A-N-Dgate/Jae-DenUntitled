@@ -12,6 +12,7 @@ if __name__ == "__main__":
     framerate = pygame.time.Clock()
 
     RATE = 500 
+    THRESHOLD = 10000
 
     #sprites, objects and groups
     box = BattleBox()
@@ -25,8 +26,9 @@ if __name__ == "__main__":
     X_BOUND = (box.get_x() + box.get_width()) - heart.get_rect().width
     Y_BOUND = (box.get_y() + box.get_height() - heart.get_rect().height)
 
+    alive = True
     #gameplay loop
-    while True:
+    while alive:
         framerate.tick(60)
         ticks = pygame.time.get_ticks()
 
@@ -59,8 +61,8 @@ if __name__ == "__main__":
         if heart.check_hit(bullet_group):
             heart.hit()
             if heart.check_dead():
-                pygame.quit()
-                sys.exit()
+                heart.dead()
+                alive = False
 
 
         #screen display
@@ -74,5 +76,28 @@ if __name__ == "__main__":
 
         heart.get_healthbar().draw(screen)
 
+        #looking at the hitboxes
+        pygame.draw.rect(screen, (0,0,255), heart.get_rect(), width=3)
+
 
         pygame.display.update()
+
+
+    while not alive:
+        framerate.tick(60)
+        ticks = pygame.time.get_ticks()
+
+        #screen display
+        screen.blit(background, (0,0))
+
+        heartGroup.update() 
+        heartGroup.draw(screen)
+
+        bullet_group.update(ticks, RATE)
+        bullet_group.draw()
+
+        heart.get_healthbar().draw(screen)
+
+        if ticks > THRESHOLD:
+            pygame.quit()
+            sys.exit()
