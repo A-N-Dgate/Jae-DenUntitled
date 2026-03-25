@@ -12,7 +12,7 @@ if __name__ == "__main__":
     framerate = pygame.time.Clock()
 
     RATE = 500 
-    THRESHOLD = 10000
+    THRESHOLD = 1000
 
     #sprites, objects and groups
     box = BattleBox()
@@ -62,6 +62,7 @@ if __name__ == "__main__":
             heart.hit()
             if heart.check_dead():
                 heart.dead()
+                time = ticks
                 alive = False
 
 
@@ -98,6 +99,6 @@ if __name__ == "__main__":
 
         heart.get_healthbar().draw(screen)
 
-        if ticks > THRESHOLD:
+        if ticks - time > THRESHOLD:
             pygame.quit()
             sys.exit()
