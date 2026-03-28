@@ -15,6 +15,18 @@ def screen_setup():
     background = pygame.image.load("spritesheets/background.png")
     return background, screen
 
+def create_group(spriteArr):
+    """
+    Creates a pygame sprite group obejct.
+    :param spriteArr: array of sprite objects to be added to the group.
+    :returns group: pygame group object.
+    """
+    group = pygame.sprite.Group()
+    for sprite in spriteArr:
+        group.add(sprite)
+
+    return group
+
 def introduction_pil(screen):
     """
     Procedure for Pil's introduction.
@@ -33,24 +45,17 @@ def exit_game():
 
 def player_select_setup(screen):
     """
-    Function sets up the sprite groups for the select portion of the battle.
-    :returns pygame spritegroups: for Pil and the Select buttons.
+    Function sets up the sprites for the player select screen.
+    :param screen: pygame surface representing the screen.
+    :returns tuple sprites: returns the pil sprite object and an array of the selects sprite objects.
     """
     pil = Pil(screen)
     fight = Fight_sel(screen)
     item = Item_sel(screen)
     talk = Talk_sel(screen)
-
-    pilGroup = pygame.sprite.Group()
-    selectGroup = pygame.sprite.Group()
-
-    pilGroup.add(pil)
-    selectGroup.add(fight)
-    selectGroup.add(item)
-    selectGroup.add(talk)
     pil.default()
 
-    return (pilGroup, selectGroup)
+    return (pil, [fight, item, talk])
 
 def mouse_eventcheck(mouse_x, mouse_y):
     """
@@ -70,7 +75,7 @@ def mouse_eventcheck(mouse_x, mouse_y):
     return mouse_x, mouse_y
 
 
-def player_select_loop(screen, background, pilGroup, selectGroup):
+def player_select_loop(screen, background, pil, selects):
     """
     Gameplay loop for the player select portion of the battle.
     :param screen: pygame surface object.
@@ -84,12 +89,14 @@ def player_select_loop(screen, background, pilGroup, selectGroup):
     RATE = 500
     FRAMERATE = 60
 
+    pilGroup = create_group([pil])
+    selectGroup = create_group(selects)
+
     while not_fight:
         framerate.tick(FRAMERATE)
         ticks = pygame.time.get_ticks()
 
         mouse_x, mouse_y = mouse_eventcheck(mouse_x, mouse_y)
-        
         screen.blit(background, (0,0))
         pilGroup.update(ticks, RATE) 
         selectGroup.update(mouse_x, mouse_y)
