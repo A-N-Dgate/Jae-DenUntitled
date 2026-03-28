@@ -15,14 +15,14 @@ def screen_setup():
     background = pygame.image.load("spritesheets/background.png")
     return background, screen
 
-def create_group(spriteArr):
+def create_group(sprites):
     """
     Creates a pygame sprite group obejct.
-    :param spriteArr: array of sprite objects to be added to the group.
+    :param spriteArr: tuple of sprite objects to be added to the group.
     :returns group: pygame group object.
     """
     group = pygame.sprite.Group()
-    for sprite in spriteArr:
+    for sprite in sprites:
         group.add(sprite)
 
     return group
@@ -47,7 +47,7 @@ def player_select_setup(screen):
     """
     Function sets up the sprites for the player select screen.
     :param screen: pygame surface representing the screen.
-    :returns tuple sprites: returns the pil sprite object and an array of the selects sprite objects.
+    :returns tuple sprites: returns the pil sprite object and a tuple of the selects sprite objects.
     """
     pil = Pil(screen)
     fight = Fight_sel(screen)
@@ -55,7 +55,10 @@ def player_select_setup(screen):
     talk = Talk_sel(screen)
     pil.default()
 
-    return (pil, [fight, item, talk])
+    pilGroup = pygame.sprite.Group()
+    pilGroup.add(pil)
+
+    return (pilGroup, (fight, item, talk))
 
 def mouse_eventcheck(mouse_x, mouse_y):
     """
@@ -64,15 +67,20 @@ def mouse_eventcheck(mouse_x, mouse_y):
     :param mouse_y: integer value of mouse y coordinate.
     :returns (int, int): new x and y coordinates for the mouse.
     """
-    
+    click = False
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit_game()
 
         if event.type == pygame.MOUSEMOTION:
             mouse_x, mouse_y = pygame.mouse.get_pos()
+            click = False
 
-    return mouse_x, mouse_y
+        if event.type == pygame.MOUSEBUTTONUP:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            click = True
+
+    return mouse_x, mouse_y, click
 
 
 def player_select_loop(screen, background, pil, selects):
@@ -89,19 +97,22 @@ def player_select_loop(screen, background, pil, selects):
     RATE = 500
     FRAMERATE = 60
 
-    pilGroup = create_group([pil])
     selectGroup = create_group(selects)
+    fight, item, talk = selects
 
     while not_fight:
         framerate.tick(FRAMERATE)
         ticks = pygame.time.get_ticks()
 
-        mouse_x, mouse_y = mouse_eventcheck(mouse_x, mouse_y)
+        mouse_x, mouse_y, click = mouse_eventcheck(mouse_x, mouse_y)
+        if click and fight.check_click(mouse_x, mouse_y):
+            not_fight = False
+            
         screen.blit(background, (0,0))
-        pilGroup.update(ticks, RATE) 
+        pil.update(ticks, RATE) 
         selectGroup.update(mouse_x, mouse_y)
 
-        pilGroup.draw(screen)
+        pil.draw(screen)
         selectGroup.draw(screen)
 
         pygame.display.update()
