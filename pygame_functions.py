@@ -1,6 +1,8 @@
 from devilmalz import *
 from select_sprites import *
 from Writer import *
+from BattleBox import *
+from HeartObject import *
 import pygame, sys
 
 def screen_setup():
@@ -56,13 +58,10 @@ def player_select_setup(screen):
     talk = Talk_sel(screen)
     pil.default()
 
-    pilGroup = pygame.sprite.Group()
-    pilGroup.add(pil)
-
     writer = Writer(screen)
     writer.load_text("text/intro.txt")
 
-    return (pilGroup, (fight, item, talk), writer)
+    return (pil, (fight, item, talk), writer)
 
 def mouse_eventcheck(mouse_x, mouse_y):
     """
@@ -106,6 +105,7 @@ def player_select_loop(screen, background, pil, selects, writer):
 
     selectGroup = create_group(selects)
     fight, item, talk = selects
+    pilGroup = create_group([pil])
 
     while not_fight:
         framerate.tick(FRAMERATE)
@@ -116,12 +116,109 @@ def player_select_loop(screen, background, pil, selects, writer):
             not_fight = False
             
         screen.blit(background, (0,0))
-        pil.update(ticks, RATE) 
+        pilGroup.update(ticks, RATE) 
         selectGroup.update(mouse_x, mouse_y)
 
-        pil.draw(screen)
+        pilGroup.draw(screen)
         selectGroup.draw(screen)
         writer.display_text(colour=TEXT_COLOUR)
 
         pygame.display.update()
+
+
+def pil_attack_setup(player, pil):
+    """
+    Setting up the objects needed for Pil's attack ssequence.
+    :param player: character object from ealier in the game.
+    :param Pil: Pil object.
+    :returns tuple: the battle box, heart and pil objects initialised here.
+    """
+    box = BattleBox()
+    heart = HeartObject(player)
+    pil.attack()
+
+    return (box, heart, pil)
+
+def pil_attack_loop(screen, background, heart, pil, box):
+    """
+    Gameplay loop for Pil's attack and the player dodging.
+    :param screen: pygame surface object representing the screen.
+    :param background: pygame image for the background.
+    :param heart: HeartObject object representing the player.
+    :param pil: Pil object.
+    :param box: pygame rect object representing the box the heart stays in.
+    """
+    bulets_exist = True
+    framerate = pygame.time.Clock()
+    
+    RATE = 500
+    FRAMERATE = 60
+
+    pilGroup = create_group([pil])
+    heartGroup = create_group([heart])
+
+    while bulets_exist:
+        framerate.tick(FRAMERATE)
+        ticks = pygame.time.get_ticks()
+
+        heart = player_movement(heart, box)
+
+        screen.blit(background, (0,0))
+
+        heartGroup.update()
+        heartGroup.draw(screen)
+
+        pilGroup.update(ticks, RATE)
+        pilGroup.draw(screen)
+
+        pygame.display.update()
+
+def player_movement(player, box):
+    """
+    Function letting the heart object move.
+    :param player: heartObject instansiation.
+    :param box: pygame rect obejct representing the box that the heart stays in.
+    :returns player: the heart obejct with the updated x and y coordinates.
+    """
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            exit_game()
+
+        user_input = pygame.key.get_pressed()
+        if user_input[pygame.K_w]:
+            player.move_up()
+        if user_input[pygame.K_s]:
+            player.move_down()
+        if user_input[pygame.K_d]:
+            player.move_right()
+        if user_input[pygame.K_a]:
+            player.move_left()
+
+        player = heart_bound_check(player, box)
+
+    return player
+
+
+def heart_bound_check(heart, box):
+    """
+    Makes sure the heart stays in the box.
+    :param heart: heartObject instansication.
+    :param box: pygame rect object representing where the heart is allowed to go.
+    """
+    X_BOUND = (box.get_x() + box.get_width()) - heart.get_rect().width
+    Y_BOUND = (box.get_y() + box.get_height() - heart.get_rect().height)
+        
+    if heart.get_y() < box.get_y():
+        heart.set_y(box.get_y())
+    if heart.get_y() > Y_BOUND:
+        heart.set_y(Y_BOUND)
+    if heart.get_x() < box.get_x():
+        heart.set_x(box.get_x())
+    if heart.get_x() > X_BOUND:
+        heart.set_x(X_BOUND)
+
+    return heart
+    
+    
+
 
