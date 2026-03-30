@@ -1,5 +1,6 @@
 from devilmalz import *
 from select_sprites import *
+from Writer import *
 import pygame, sys
 
 def screen_setup():
@@ -58,7 +59,10 @@ def player_select_setup(screen):
     pilGroup = pygame.sprite.Group()
     pilGroup.add(pil)
 
-    return (pilGroup, (fight, item, talk))
+    writer = Writer(screen)
+    writer.load_text("text/intro.txt")
+
+    return (pilGroup, (fight, item, talk), writer)
 
 def mouse_eventcheck(mouse_x, mouse_y):
     """
@@ -83,19 +87,22 @@ def mouse_eventcheck(mouse_x, mouse_y):
     return mouse_x, mouse_y, click
 
 
-def player_select_loop(screen, background, pil, selects):
+def player_select_loop(screen, background, pil, selects, writer):
     """
     Gameplay loop for the player select portion of the battle.
     :param screen: pygame surface object.
     :param background: pygame image object of the bakcground.
     :param pilGroup: pygame sprite group for the enemy, Pil.
     :param selectGroup: pygame sprite group for the select sprites.
+    :param writer: writer object to display text on the screen.
     """
     framerate = pygame.time.Clock()
     not_fight = True
     mouse_x = mouse_y = 0
+
     RATE = 500
     FRAMERATE = 60
+    TEXT_COLOUR = (233,148,243)
 
     selectGroup = create_group(selects)
     fight, item, talk = selects
@@ -114,6 +121,7 @@ def player_select_loop(screen, background, pil, selects):
 
         pil.draw(screen)
         selectGroup.draw(screen)
+        writer.display_text(colour=TEXT_COLOUR)
 
         pygame.display.update()
 

@@ -24,6 +24,6 @@ def Chapter2(reader, player):
 def Chapter3(player):
     background, screen = screen_setup()
     introduction_pil(screen)
-    pil, selects = player_select_setup(screen)
-    player_select_loop(screen, background, pil, selects)
+    pil, selects, writer = player_select_setup(screen)
+    player_select_loop(screen, background, pil, selects, writer)
 
