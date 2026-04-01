@@ -58,7 +58,7 @@ class HeartObject(pygame.sprite.Sprite):
         """
         Decreases the health by a fixed amount.
         """
-        self.set_health(self.get_health() - 3)
+        self.set_health(self.get_health() - 1)
         self.get_healthbar().set_health_rect()
 
     def check_dead(self):

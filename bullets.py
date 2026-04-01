@@ -56,9 +56,6 @@ class Bullets(my_sprite):
         super().update(current_time, rate, self.get_x(), self.get_y())
         self.image = pygame.transform.rotate(self.image, self.rotation_angle) 
 
-        #testing line
-        pygame.draw.rect(self.screen, (0,0,255), self.rect, width=3)
-
 
 class BulletsGroup(): # I don't think this is a sprite clas itself? it contains one
     def __init__(self, screen):

@@ -26,6 +26,6 @@ def Chapter3(player):
     introduction_pil(screen)
     pil, selects, writer = player_select_setup(screen)
     player_select_loop(screen, background, pil, selects, writer)
-    box, heart, pil = pil_attack_setup(player, pil)
-    pil_attack_loop(screen, background, heart, pil, box)
+    box, heart, pil, bullets = pil_attack_setup(screen, player, pil)
+    pil_attack_loop(screen, background, heart, pil, box, bullets)
 

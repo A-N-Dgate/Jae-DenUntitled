@@ -32,9 +32,9 @@ class my_sprite(pygame.sprite.Sprite):
         self.frame_height = height
         self.columns = columns
 
-    def update(self, current_time, rate): 
+    def update(self, current_time, rate, x, y): 
         #again, not sure if I need the x and y bc the devilmalz will stay in place
-        #--removed x and y from method
+        #need x and y for bullets?
         self.old_frame = self.frame - 1
         if current_time > self.last_time + rate:
             self.frame += 1
@@ -51,8 +51,8 @@ class my_sprite(pygame.sprite.Sprite):
             self.image = self.master_image.subsurface(self.rect)
             self.old_frame = self.frame 
 
-        self.set_x(0)
-        self.set_y(0) 
+        self.set_x(x)
+        self.set_y(y) 
         #so that the frames are in the right place
 
 

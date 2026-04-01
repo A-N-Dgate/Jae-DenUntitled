@@ -3,6 +3,7 @@ from select_sprites import *
 from Writer import *
 from BattleBox import *
 from HeartObject import *
+from bullets import *
 import pygame, sys
 
 def screen_setup():
@@ -126,9 +127,10 @@ def player_select_loop(screen, background, pil, selects, writer):
         pygame.display.update()
 
 
-def pil_attack_setup(player, pil):
+def pil_attack_setup(screen, player, pil):
     """
     Setting up the objects needed for Pil's attack ssequence.
+    :param screen: pygame surface object representing the screen.
     :param player: character object from ealier in the game.
     :param Pil: Pil object.
     :returns tuple: the battle box, heart and pil objects initialised here.
@@ -136,10 +138,11 @@ def pil_attack_setup(player, pil):
     box = BattleBox()
     heart = HeartObject(player)
     pil.attack()
+    bullets = BulletsGroup(screen)
 
-    return (box, heart, pil)
+    return (box, heart, pil, bullets)
 
-def pil_attack_loop(screen, background, heart, pil, box):
+def pil_attack_loop(screen, background, heart, pil, box, bullets):
     """
     Gameplay loop for Pil's attack and the player dodging.
     :param screen: pygame surface object representing the screen.
@@ -147,8 +150,9 @@ def pil_attack_loop(screen, background, heart, pil, box):
     :param heart: HeartObject object representing the player.
     :param pil: Pil object.
     :param box: pygame rect object representing the box the heart stays in.
+    :param bullets: Bullets Group obejct for Pil's attack.
     """
-    bulets_exist = True
+    bulets_exist = alive = True
     framerate = pygame.time.Clock()
     
     RATE = 500
@@ -157,11 +161,17 @@ def pil_attack_loop(screen, background, heart, pil, box):
     pilGroup = create_group([pil])
     heartGroup = create_group([heart])
 
-    while bulets_exist:
+    while bulets_exist and alive:
         framerate.tick(FRAMERATE)
         ticks = pygame.time.get_ticks()
 
         heart = player_movement(heart, box)
+
+        if heart.check_hit(bullets):
+            heart.hit()
+            if heart.check_dead():
+                time = ticks
+                alive = False
 
         screen.blit(background, (0,0))
 
@@ -170,6 +180,11 @@ def pil_attack_loop(screen, background, heart, pil, box):
 
         pilGroup.update(ticks, RATE)
         pilGroup.draw(screen)
+
+        bullets.update(ticks, RATE)
+        bullets.draw()
+
+        heart.get_healthbar().draw(screen)
 
         pygame.display.update()
 
