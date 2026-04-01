@@ -137,7 +137,6 @@ def pil_attack_setup(screen, player, pil):
     """
     box = BattleBox()
     heart = HeartObject(player)
-    pil.attack()
     bullets = BulletsGroup(screen)
 
     return (box, heart, pil, bullets)
@@ -157,7 +156,10 @@ def pil_attack_loop(screen, background, heart, pil, box, bullets):
     
     RATE = 500
     FRAMERATE = 60
+    TIME_ALLOWED = 9000
+    end_time = 0
 
+    pil.attack()
     pilGroup = create_group([pil])
     heartGroup = create_group([heart])
     start = pygame.time.get_ticks()
@@ -171,8 +173,11 @@ def pil_attack_loop(screen, background, heart, pil, box, bullets):
         if heart.check_hit(bullets):
             heart.hit()
             if heart.check_dead():
-                time = ticks
+                end_time = ticks
                 alive = False
+
+        if ticks > start + TIME_ALLOWED:
+            bulets_exist = False
 
         screen.blit(background, (0,0))
 
@@ -182,12 +187,14 @@ def pil_attack_loop(screen, background, heart, pil, box, bullets):
         pilGroup.update(ticks, RATE)
         pilGroup.draw(screen)
 
-        bullets.update(ticks, RATE, start)
+        bullets.update(ticks, RATE)
         bullets.draw()
 
         heart.get_healthbar().draw(screen)
 
         pygame.display.update()
+    
+    return alive, end_time
 
 def player_movement(player, box):
     """
@@ -235,6 +242,7 @@ def heart_bound_check(heart, box):
 
     return heart
     
-    
+def heart_death(end_time):
+    pass
 
 

@@ -1,5 +1,6 @@
 from suporting_functions import *
 from pygame_functions import *
+from bullets import *
 
 #constants? idk how to organsie this correctly in python...
 fileName = None
@@ -27,5 +28,12 @@ def Chapter3(player):
     pil, selects, writer = player_select_setup(screen)
     player_select_loop(screen, background, pil, selects, writer)
     box, heart, pil, bullets = pil_attack_setup(screen, player, pil)
-    pil_attack_loop(screen, background, heart, pil, box, bullets)
+    alive, end_time = pil_attack_loop(screen, background, heart, pil, box, bullets)
+    while alive:
+        player_select_loop(screen, background, pil, selects, writer) 
+        bullets = BulletsGroup(screen)
+        alive, end_time = pil_attack_loop(screen, background, heart, pil, box, bullets)
+    
+    if not alive:
+        heart_death(end_time)
 
