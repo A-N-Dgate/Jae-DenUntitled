@@ -11,6 +11,7 @@ class Bullets(my_sprite):
         self.screen = target
         self.HEIGHT = self.WIDTH = 30
         self.COLUMNS = 4
+        self.TIME_ALLOWED = 9000
         self.load("spritesheets/pilBullets.png", self.WIDTH, self.HEIGHT, self.COLUMNS)
         self.last_frame = self.COLUMNS - 1 #zero indexing ig
         self.angle = 90
@@ -25,7 +26,7 @@ class Bullets(my_sprite):
             self.set_x(900)
         self.set_y(random.randint(100,300)) 
 
-    def update(self, current_time, rate):
+    def update(self, current_time, rate, start):
         """
         Animation update method for the bullet sprite.
         :param current_time: integer time in millisecons since the sequence has started.
@@ -34,7 +35,7 @@ class Bullets(my_sprite):
         if (self.get_x() > self.screen.get_width() or 
             self.get_y() > self.screen.get_height() or
             self.get_x() < 0 or
-            self.get_y() < 0): #proabably need to simplify this
+            self.get_y() < 0 or current_time > self.TIME_ALLOWED + start): #proabably need to simplify this
             self.kill()
 
         MULTIPLIER = 9   #speed and size of the circle (not exactly)
@@ -67,8 +68,8 @@ class BulletsGroup(): # I don't think this is a sprite clas itself? it contains 
     
     def get_group(self): return self.group
 
-    def update(self, current_time, rate):
-        self.get_group().update(current_time, rate)
+    def update(self, current_time, rate, start):
+        self.get_group().update(current_time, rate, start)
 
     def draw(self):
         self.get_group().draw(self.screen)

@@ -160,6 +160,7 @@ def pil_attack_loop(screen, background, heart, pil, box, bullets):
 
     pilGroup = create_group([pil])
     heartGroup = create_group([heart])
+    start = pygame.time.get_ticks()
 
     while bulets_exist and alive:
         framerate.tick(FRAMERATE)
@@ -181,7 +182,7 @@ def pil_attack_loop(screen, background, heart, pil, box, bullets):
         pilGroup.update(ticks, RATE)
         pilGroup.draw(screen)
 
-        bullets.update(ticks, RATE)
+        bullets.update(ticks, RATE, start)
         bullets.draw()
 
         heart.get_healthbar().draw(screen)
