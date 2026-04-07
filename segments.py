@@ -21,6 +21,7 @@ def Chapter2(reader, player):
     player = create_room(player, chapter) #not sure where to put this since the previous was 
     #put in create, but here looks good?
     string_parsing2(reader, player)
+    time.sleep(5)
 
 def Chapter3(player):
     background, screen = screen_setup()
