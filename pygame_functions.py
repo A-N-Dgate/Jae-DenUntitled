@@ -60,7 +60,6 @@ def player_select_setup(screen):
     pil.default()
 
     writer = Writer(screen)
-    writer.load_text("text/intro.txt")
 
     return (pil, (fight, item, talk), writer)
 
@@ -86,8 +85,16 @@ def mouse_eventcheck(mouse_x, mouse_y):
 
     return mouse_x, mouse_y, click
 
+def quit_event():
+    """
+    pygame event check if you only need to check quitting the game.
+    """
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            exit_game()
 
-def player_select_loop(screen, background, pil, selects, writer):
+
+def player_select_loop(pil, selects, writer):
     """
     Gameplay loop for the player select portion of the battle.
     :param screen: pygame surface object.
@@ -96,6 +103,7 @@ def player_select_loop(screen, background, pil, selects, writer):
     :param selectGroup: pygame sprite group for the select sprites.
     :param writer: writer object to display text on the screen.
     """
+    background, screen = screen_setup()
     framerate = pygame.time.Clock()
     not_fight = True
     mouse_x = mouse_y = 0
@@ -107,6 +115,8 @@ def player_select_loop(screen, background, pil, selects, writer):
     selectGroup = create_group(selects)
     fight, item, talk = selects
     pilGroup = create_group([pil])
+
+    writer.load_text("text/intro.txt")
 
     while not_fight:
         framerate.tick(FRAMERATE)
@@ -141,7 +151,7 @@ def pil_attack_setup(screen, player, pil):
 
     return (box, heart, pil, bullets)
 
-def pil_attack_loop(screen, background, heart, pil, box, bullets):
+def pil_attack_loop(heart, pil, box, bullets):
     """
     Gameplay loop for Pil's attack and the player dodging.
     :param screen: pygame surface object representing the screen.
@@ -153,11 +163,11 @@ def pil_attack_loop(screen, background, heart, pil, box, bullets):
     """
     bulets_exist = alive = True
     framerate = pygame.time.Clock()
+    background, screen = screen_setup()
     
     RATE = 500
     FRAMERATE = 60
     TIME_ALLOWED = 9000
-    end_time = 0
 
     pil.attack()
     pilGroup = create_group([pil])
@@ -176,8 +186,9 @@ def pil_attack_loop(screen, background, heart, pil, box, bullets):
                 end_time = ticks
                 alive = False
 
-        if ticks > start + TIME_ALLOWED:
+        if time_out(start, ticks, TIME_ALLOWED):
             bulets_exist = False
+            end_time = ticks
 
         screen.blit(background, (0,0))
 
@@ -241,6 +252,54 @@ def heart_bound_check(heart, box):
         heart.set_x(X_BOUND)
 
     return heart
+
+def pil_intermission(start_time, pil, writer):
+    """
+    Pil's talking inbetween attacks.
+    :param screen: pygame surface object representing the screen.
+    :param background: pygame image object for the screen background.
+    :param start_time: integer when the previous function ended.
+    :param pil: pil object.
+    :param writer: writer obejct to display text on the screen.
+    """
+
+    TIME_ALLOWED = 2500
+    FRAMERATE = 60
+    RATE = 500
+    TEXT_COLOUR = (233,148,243)
+    
+    writer.load_text("text/intermission.txt")
+    pilGroup = create_group([pil])
+    intermission = True
+    framerate = pygame.time.Clock()
+
+    background, screen = screen_setup()
+
+    while intermission:
+        framerate.tick(FRAMERATE)
+        ticks = pygame.time.get_ticks()
+
+        quit_event()
+
+        intermission = not time_out(start_time, ticks, TIME_ALLOWED)
+
+        screen.blit(background, (0,0))
+        pilGroup.update(ticks, RATE) 
+
+        pilGroup.draw(screen)
+        writer.display_text(colour=TEXT_COLOUR)
+
+        pygame.display.update()
+        
+def time_out(start, ticks, time_allowed):
+    """
+    checks if the allocated time allowed for a function has passed.
+    :param start: integer time start.
+    :param ticks: interger current time.
+    :param time_allowed: time allocated for the fucnton to run.
+    :returns boolean: if the time has enlapsed or not.
+    """
+    return ticks > start + time_allowed
     
 def heart_death(end_time):
     pass

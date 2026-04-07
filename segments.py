@@ -26,13 +26,15 @@ def Chapter3(player):
     background, screen = screen_setup()
     introduction_pil(screen)
     pil, selects, writer = player_select_setup(screen)
-    player_select_loop(screen, background, pil, selects, writer)
+    player_select_loop(pil, selects, writer)
     box, heart, pil, bullets = pil_attack_setup(screen, player, pil)
-    alive, end_time = pil_attack_loop(screen, background, heart, pil, box, bullets)
+    alive, end_time = pil_attack_loop(heart, pil, box, bullets)
+    pil_intermission(end_time, pil, writer)
     while alive:
-        player_select_loop(screen, background, pil, selects, writer) 
+        player_select_loop(pil, selects, writer) 
         bullets = BulletsGroup(screen)
-        alive, end_time = pil_attack_loop(screen, background, heart, pil, box, bullets)
+        alive, end_time = pil_attack_loop(heart, pil, box, bullets)
+        pil_intermission(end_time, pil, writer)
     
     if not alive:
         heart_death(end_time)
