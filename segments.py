@@ -8,7 +8,23 @@ isParagraph = False
 intro = True
 
 def Introduction():
-    pass
+    input("""
+=====================================INTRODUCTION======================================
+Welcome to the first test build of this game! this initial test is to see if everything
+feels okay within the 2 completed sections, and the just started 3rd.
+    
+For everything to work smoothly, please make sure that your CMD window is no smaller
+than the line indicated with the ===, and set the font size and colour to something 
+that is comfortable for you to use.
+          
+Once that is done, press Enter to continue.
+>""")
+    
+    choice = ""
+    while choice != "n" and choice != "y":
+        choice = input("Do you want to skip chapters 1 and 2? (y/n)").lower()
+        
+    return choice == "y"
 
 def Chapter1(reader, player):
     display_text(reader, "chapterI", fileName, isParagraph, intro)
