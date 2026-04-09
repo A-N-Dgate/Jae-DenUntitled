@@ -6,6 +6,6 @@ skip = Introduction()
 if skip:
     Chapter3(player)
 else:
-    Chapter1(reader, player) 
-    Chapter2(reader, player)
+    player = Chapter1(reader, player) 
+    player = Chapter2(reader, player)
     Chapter3(player)

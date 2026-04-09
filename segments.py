@@ -28,7 +28,8 @@ Once that is done, press Enter to continue.
 
 def Chapter1(reader, player):
     display_text(reader, "chapterI", fileName, isParagraph, intro)
-    string_parsing1(reader, player)
+    player = string_parsing1(reader, player)
+    return player
 
 
 def Chapter2(reader, player):
@@ -38,6 +39,7 @@ def Chapter2(reader, player):
     #put in create, but here looks good?
     string_parsing2(reader, player)
     time.sleep(5)
+    return player
 
 def Chapter3(player):
     background, screen = screen_setup()

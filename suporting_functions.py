@@ -114,6 +114,7 @@ def string_parsing1(reader, player):
     time.sleep(3)
     display_text(reader, "ChapterI", "exit")
     time.sleep(3)
+    return player
 
 def string_parsing2(reader, player):
     end = False
@@ -173,6 +174,8 @@ def string_parsing2(reader, player):
         #sepreate if branch/chain
         if obj != None:
             display_text(reader, "ChapterII", obj, isParagraph)
+    
+    return player
 
 
 def pickupProcedure(player, inp):
