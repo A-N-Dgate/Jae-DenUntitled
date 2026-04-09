@@ -15,7 +15,8 @@ feels okay within the 2 completed sections, and the just started 3rd.
     
 For everything to work smoothly, please make sure that your CMD window is no smaller
 than the line indicated with the ===, and set the font size and colour to something 
-that is comfortable for you to use.
+that is comfortable for you to use. You can do this by right-clicking the bar where
+the file directory is, then left click on properties and the options shoudl be there.
 
 ">" indicates for your input
           
