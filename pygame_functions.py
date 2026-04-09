@@ -301,7 +301,40 @@ def time_out(start, ticks, time_allowed):
     """
     return ticks > start + time_allowed
     
-def heart_death(end_time):
-    pass
+def heart_death(end_time, heart, pil, bulletGroup):
+    TIME_ALLOWED = 2000
+    FRAMERATE = 60
+    RATE = 500
+    framerate = pygame.time.Clock()
+    animating = True
+    heartGroup = create_group([heart])
+    pilGroup = create_group([pil])
+
+    background, screen = screen_setup()
+    heart.dead()
+
+    while animating:
+        framerate.tick(FRAMERATE)
+        ticks = pygame.time.get_ticks()
+
+        quit_event()
+
+        screen.blit(background, (0,0))
+
+        heartGroup.update()
+        heartGroup.draw(screen)
+
+        bulletGroup.draw()
+
+        pilGroup.update(ticks, RATE)
+        pilGroup.draw(screen)
+
+        heart.get_healthbar().draw(screen)
+
+        pygame.display.update()
+
+        if time_out(end_time, ticks, TIME_ALLOWED):
+            animating = False
+
 
 
