@@ -58,18 +58,18 @@ def Chapter3(player):
     background, screen = screen_setup()
     introduction_pil(screen)
     pil, selects, writer = player_select_setup(screen)
-    box, heart, pil, bullets = pil_attack_setup(screen, player, pil)
+    box, heart = pil_attack_setup(screen, player)
 
     alive = True
     end_time = pygame.time.get_ticks()
     while alive:
         pil_intermission(end_time, pil, writer)
         player_select_loop(pil, selects, writer) 
-        bullets = BulletsGroup(screen)
-        alive, end_time = pil_attack_loop(heart, pil, box, bullets)
+        pil.setup_bullets(screen)
+        alive, end_time = pil_attack_loop(heart, pil, box)
 
     if not alive:
-        heart_death(end_time, heart, pil, bullets)
+        heart_death(end_time, heart, pil)
         
     
     

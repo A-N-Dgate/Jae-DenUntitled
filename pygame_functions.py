@@ -137,7 +137,7 @@ def player_select_loop(pil, selects, writer):
         pygame.display.update()
 
 
-def pil_attack_setup(screen, player, pil):
+def pil_attack_setup(screen, player):
     """
     Setting up the objects needed for Pil's attack ssequence.
     :param screen: pygame surface object representing the screen.
@@ -147,11 +147,10 @@ def pil_attack_setup(screen, player, pil):
     """
     box = BattleBox()
     heart = HeartObject(player)
-    bullets = BulletsGroup(screen)
 
-    return (box, heart, pil, bullets)
+    return (box, heart)
 
-def pil_attack_loop(heart, pil, box, bullets):
+def pil_attack_loop(heart, pil, box):
     """
     Gameplay loop for Pil's attack and the player dodging.
     :param screen: pygame surface object representing the screen.
@@ -180,7 +179,7 @@ def pil_attack_loop(heart, pil, box, bullets):
 
         heart = player_movement(heart, box)
 
-        if heart.check_hit(bullets):
+        if heart.check_hit(pil.get_bullets()):
             heart.hit()
             if heart.check_dead():
                 end_time = ticks
@@ -197,9 +196,7 @@ def pil_attack_loop(heart, pil, box, bullets):
 
         pilGroup.update(ticks, RATE)
         pilGroup.draw(screen)
-
-        bullets.update(ticks, RATE)
-        bullets.draw()
+        pil.fight(ticks, RATE)
 
         heart.get_healthbar().draw(screen)
 

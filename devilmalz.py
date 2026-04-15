@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from animating_sprites import *
+from bullets import *
 
 class Devilmalz(my_sprite):
     """
@@ -68,11 +69,29 @@ class Devilmalz(my_sprite):
 
 
 class Pil(Devilmalz):
-    #loads their own spritesheet + anything else
-    #attack patterns 
-    #need probably a class + subclasses for the bullets - problem for later
     def __init__(self, target):
         super().__init__(target)
-        self.load("spritesheets/pil.png", 192, 192, 18) #magic numbers?
+        self.screen = target
+        self.HEIGHT = self.WIDTH = 192
+        self.COLUMNS = 18  
+        self.load("spritesheets/pil.png", self.HEIGHT, self.WIDTH, self.COLUMNS) 
+        self.bullets = None
 
-    #testing animation here so I don't think there's much else to do 
+    def get_bullets(self): return self.bullets
+
+    def fight(self, ticks, RATE):
+        """
+        Method for Pil attacking the player.
+        :param ticks: pygame ticks.
+        :param RATE: rate at which the bullets should update.
+        """
+        self.get_bullets().update(ticks, RATE)
+        self.get_bullets().draw()
+
+    def setup_bullets(self, screen):
+        """
+        Reserting the bullets for Pil's attack.
+        :param screen: pygame surface obejct representing the screen.
+        """
+        self.bullets = BulletsGroup(screen)
+
