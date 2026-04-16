@@ -94,4 +94,5 @@ class Pil(Devilmalz):
         :param screen: pygame surface obejct representing the screen.
         """
         self.bullets = BulletsGroup(screen)
+        self.bullets.choose_attack()
 

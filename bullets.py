@@ -12,18 +12,11 @@ class Bullets(my_sprite):
         self.HEIGHT = self.WIDTH = 30
         self.COLUMNS = 4
         self.load("spritesheets/pilBullets.png", self.WIDTH, self.HEIGHT, self.COLUMNS)
-        self.last_frame = self.COLUMNS - 1 #zero indexing ig
-        self.angle = 90
-        self.rotation_angle = 0 
-        self.inverse = random.choice([True, False])
-        self.dTheta = random.uniform(1,3)
-        self.rect = self.image.get_rect()
+        self.last_frame = self.COLUMNS - 1 
+        self.rect = self.image.get_rect()     
+        self.choice = 0
 
-        if self.inverse:
-            self.set_x(450)
-        else:
-            self.set_x(900)
-        self.set_y(random.randint(100,300)) 
+    def set_choice(self, a): self.choice = a
 
     def update(self, current_time, rate):
         """
@@ -31,17 +24,53 @@ class Bullets(my_sprite):
         :param current_time: integer time in millisecons since the sequence has started.
         :param rate: rate in milliseconds tha the sprite should update.
         """
+        match self.choice:
+            case 1:
+                self.pattern_one(current_time, rate)
+            case 2:
+                self.pattern_two(current_time, rate)
+            case _:
+                pass
+         
+    def setup_pattern(self, choice):
+        """
+        Setting up the initial attribute values each attack pattern.
+        :param choice: The attack patern chosen for Pil's next attack. 
+        """
+        match choice:
+            case 1:
+                self.inverse = random.choice([True, False])
+                self.angle = 90
+                self.rotation_angle = 0 
+                self.dTheta = random.uniform(1,3)
+
+                if self.inverse:
+                    self.set_x(450)
+                else:
+                    self.set_x(900)
+                self.set_y(random.randint(100,300))
+            case 2:
+                self.set_y(200)
+                self.set_x(random.randint(100,1800))
+
+
+    def pattern_one(self, current_time, rate):
+        """
+        One attack pattern for Pil.
+        :param current_time: current tiem in ticks.
+        :param rate: rate in which to update in ticks past.
+        """
+        MULTIPLIER = 9   #speed and size of the circle (not exactly)
+        TOTAL_DEGREES = 360
+         
+
         if (self.get_x() > self.screen.get_width() or 
             self.get_y() > self.screen.get_height() or
             self.get_x() < 0 or
             self.get_y() < 0): #proabably need to simplify this
             self.kill()
 
-        MULTIPLIER = 9   #speed and size of the circle (not exactly)
-        TOTAL_DEGREES = 360
-        
         self.angle = (self.angle - self.dTheta) % TOTAL_DEGREES
-        #print(self.angle) 
         dx = math.sin(math.radians(self.angle)) * MULTIPLIER
         dy = math.cos(math.radians(self.angle)) * MULTIPLIER
 
@@ -54,7 +83,10 @@ class Bullets(my_sprite):
         self.set_y(self.get_y() + dy)
 
         super().update(current_time, rate, self.get_x(), self.get_y())
-        self.image = pygame.transform.rotate(self.image, self.rotation_angle) 
+        self.image = pygame.transform.rotate(self.image, self.rotation_angle)
+
+    def pattern_two(self, current_time, rate):
+        super().update(current_time, rate, self.get_x(), self.get_y())
 
 
 class BulletsGroup(): # I don't think this is a sprite clas itself? it contains one
@@ -66,6 +98,15 @@ class BulletsGroup(): # I don't think this is a sprite clas itself? it contains 
             self.group.add(bullet)
     
     def get_group(self): return self.group
+
+    def choose_attack(self):
+        """
+        Selecting the attack pattern randomly.
+        """
+        choice = random.randint(1,2)
+        for sprite in self.get_group():
+            sprite.setup_pattern(choice)
+            sprite.set_choice(choice)
 
     def update(self, current_time, rate):
         self.get_group().update(current_time, rate)
