@@ -1,4 +1,5 @@
 from animating_sprites import *
+from BattleBox import *
 import pygame, math, random
 
 #this class might be placed with the devilmalz in the actual product / non-testing folders 
@@ -18,6 +19,14 @@ class Bullets(my_sprite):
 
     def set_choice(self, a): self.choice = a
 
+    def __check_kill(self):
+        if (self.get_x() > self.screen.get_width() or 
+            self.get_y() > self.screen.get_height() or
+            self.get_x() < 0 or
+            self.get_y() < 0):
+            self.kill()
+
+
     def update(self, current_time, rate):
         """
         Animation update method for the bullet sprite.
@@ -35,8 +44,9 @@ class Bullets(my_sprite):
     def setup_pattern(self, choice):
         """
         Setting up the initial attribute values each attack pattern.
-        :param choice: The attack patern chosen for Pil's next attack. 
+        :param choice: The attack patern chosen for Pil's next attack.
         """
+        box = BattleBox()
         match choice:
             case 1:
                 self.inverse = random.choice([True, False])
@@ -50,8 +60,12 @@ class Bullets(my_sprite):
                     self.set_x(900)
                 self.set_y(random.randint(100,300))
             case 2:
-                self.set_y(200)
-                self.set_x(random.randint(100,1800))
+                self.inverse = random.choice([True, False])
+                self.set_y(100)
+                if self.inverse:
+                    self.set_x(random.randint(box.get_x(), (box.get_x() + 200)))
+                else:
+                    self.set_x(random.randint((box.get_x() + 250), (box.get_y() + box.get_width())))
 
 
     def pattern_one(self, current_time, rate):
@@ -63,12 +77,7 @@ class Bullets(my_sprite):
         MULTIPLIER = 9   #speed and size of the circle (not exactly)
         TOTAL_DEGREES = 360
          
-
-        if (self.get_x() > self.screen.get_width() or 
-            self.get_y() > self.screen.get_height() or
-            self.get_x() < 0 or
-            self.get_y() < 0): #proabably need to simplify this
-            self.kill()
+        self.__check_kill()
 
         self.angle = (self.angle - self.dTheta) % TOTAL_DEGREES
         dx = math.sin(math.radians(self.angle)) * MULTIPLIER
@@ -86,6 +95,17 @@ class Bullets(my_sprite):
         self.image = pygame.transform.rotate(self.image, self.rotation_angle)
 
     def pattern_two(self, current_time, rate):
+        box = BattleBox()
+
+        self.__check_kill()
+        dy = 0
+
+        if box.get_y() < self.get_y() < box.get_y() + box.get_height():
+            dy = 15
+        else:
+            dy = 5
+
+        self.set_y(self.get_y() + dy)
         super().update(current_time, rate, self.get_x(), self.get_y())
 
 
@@ -105,8 +125,9 @@ class BulletsGroup(): # I don't think this is a sprite clas itself? it contains 
         """
         choice = random.randint(1,2)
         for sprite in self.get_group():
-            sprite.setup_pattern(choice)
             sprite.set_choice(choice)
+            sprite.setup_pattern(choice)
+            
 
     def update(self, current_time, rate):
         self.get_group().update(current_time, rate)

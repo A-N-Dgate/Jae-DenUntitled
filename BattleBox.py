@@ -9,7 +9,6 @@ class BattleBox():
         TOP = 400
         WIDTH = 543
         HEIGHT = 330
-        HEART = 32
         self.rect = pygame.Rect(LEFT, TOP, WIDTH, HEIGHT)
 
     def get_rect(self): return self.rect

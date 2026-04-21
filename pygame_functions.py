@@ -185,7 +185,7 @@ def pil_attack_loop(heart, pil, box):
                 end_time = ticks
                 alive = False
 
-        if time_out(start, ticks, TIME_ALLOWED):
+        if time_out(start, ticks, TIME_ALLOWED) or not pil.get_bullets().get_group():
             bulets_exist = False
             end_time = ticks
 
