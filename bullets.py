@@ -61,6 +61,7 @@ class Bullets(my_sprite):
                 self.set_y(random.randint(100,300))
             case 2:
                 self.inverse = random.choice([True, False])
+                self.rotation_angle = 0
                 self.set_y(100)
                 if self.inverse:
                     self.set_x(random.randint(box.get_x(), (box.get_x() + 200)))
@@ -96,6 +97,7 @@ class Bullets(my_sprite):
 
     def pattern_two(self, current_time, rate):
         box = BattleBox()
+        DA = 5
 
         self.__check_kill()
         dy = 0
@@ -106,7 +108,9 @@ class Bullets(my_sprite):
             dy = 5
 
         self.set_y(self.get_y() + dy)
+        self.rotation_angle += DA
         super().update(current_time, rate, self.get_x(), self.get_y())
+        self.image = pygame.transform.rotate(self.image, self.rotation_angle)
 
 
 class BulletsGroup(): # I don't think this is a sprite clas itself? it contains one
