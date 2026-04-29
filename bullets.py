@@ -38,6 +38,8 @@ class Bullets(my_sprite):
                 self.pattern_one(current_time, rate)
             case 2:
                 self.pattern_two(current_time, rate)
+            case 3:
+                self.pattern_three(current_time, rate)
             case _:
                 pass
          
@@ -67,6 +69,16 @@ class Bullets(my_sprite):
                     self.set_x(random.randint(box.get_x(), (box.get_x() + 200)))
                 else:
                     self.set_x(random.randint((box.get_x() + 250), (box.get_y() + box.get_width())))
+
+            case 3:
+                self.inverse = random.choice([True, False])
+
+                if self.inverse:
+                    self.set_x(box.get_x() + box.get_width() + 20)
+                else:
+                    self.set_x(box.get_x() - 50)
+
+                self.set_y(box.get_rect().top + (box.get_height() // 2))
 
 
     def pattern_one(self, current_time, rate):
@@ -112,6 +124,9 @@ class Bullets(my_sprite):
         super().update(current_time, rate, self.get_x(), self.get_y())
         self.image = pygame.transform.rotate(self.image, self.rotation_angle)
 
+    def pattern_three(self, current_time, rate):
+        super().update(current_time, rate, self.get_x(), self.get_y())
+
 
 class BulletsGroup(): # I don't think this is a sprite clas itself? it contains one
     def __init__(self, screen):
@@ -127,7 +142,7 @@ class BulletsGroup(): # I don't think this is a sprite clas itself? it contains 
         """
         Selecting the attack pattern randomly.
         """
-        choice = random.randint(1,2)
+        choice = random.randint(1,3)
         for sprite in self.get_group():
             sprite.set_choice(choice)
             sprite.setup_pattern(choice)
