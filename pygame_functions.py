@@ -3,7 +3,7 @@ from select_sprites import *
 from Writer import *
 from BattleBox import *
 from HeartObject import *
-from bullets import *
+from suporting_functions import time_out
 import pygame, sys
 
 def screen_setup():
@@ -288,15 +288,6 @@ def pil_intermission(start_time, pil, writer):
 
         pygame.display.update()
         
-def time_out(start, ticks, time_allowed):
-    """
-    checks if the allocated time allowed for a function has passed.
-    :param start: integer time start.
-    :param ticks: interger current time.
-    :param time_allowed: time allocated for the fucnton to run.
-    :returns boolean: if the time has enlapsed or not.
-    """
-    return ticks > start + time_allowed
     
 def heart_death(end_time, heart, pil, bulletGroup):
     TIME_ALLOWED = 2000

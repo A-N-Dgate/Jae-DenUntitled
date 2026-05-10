@@ -219,5 +219,14 @@ def removeArticles(inp):
     return returnList
 # why isn't "not in" in a fun colour :(
 
+def time_out(start, ticks, time_allowed):
+    """
+    checks if the allocated time allowed for a function has passed.
+    :param start: integer time start.
+    :param ticks: interger current time.
+    :param time_allowed: time allocated for the fucnton to run.
+    :returns boolean: if the time has enlapsed or not.
+    """
+    return ticks > start + time_allowed
 
 
