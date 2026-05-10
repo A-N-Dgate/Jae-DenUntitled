@@ -77,7 +77,7 @@ class Bullets(my_sprite):
                 self.rotation_angle = 0
                 self.start_time = 0
                 self.angle = 90
-                self.radius = box.get_height() / 2
+                self.radius = box.get_height() / 4
                 if self.inverse:
                     self.set_x(box.get_x() + box.get_width() + 20)
                 else:
@@ -142,12 +142,13 @@ class Bullets(my_sprite):
             super().update(current_time, rate, self.get_x(), self.get_y())
             self.image = pygame.transform.rotate(self.image, self.rotation_angle)
         else:
-            self.angle = (self.angle + 50) % 360
+            self.angle = (self.angle - 10) % 360
             dx = math.sin(math.radians(self.angle)) * self.radius
             dy = math.cos(math.radians(self.angle)) * self.radius 
 
             if self.inverse:
                 dx = -dx
+                dy = -dy
 
             self.rotation_angle = (-math.degrees(math.atan2(dy,dx))) % 360
             self.set_x(self.get_x() + dx)
