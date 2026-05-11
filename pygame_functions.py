@@ -289,7 +289,7 @@ def pil_intermission(start_time, pil, writer):
         pygame.display.update()
         
     
-def heart_death(end_time, heart, pil, bulletGroup):
+def heart_death(end_time, heart, pil):
     TIME_ALLOWED = 2000
     FRAMERATE = 60
     RATE = 500
@@ -312,7 +312,7 @@ def heart_death(end_time, heart, pil, bulletGroup):
         heartGroup.update()
         heartGroup.draw(screen)
 
-        bulletGroup.draw()
+        pil.get_bullets().draw()
 
         pilGroup.update(ticks, RATE)
         pilGroup.draw(screen)

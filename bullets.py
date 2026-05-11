@@ -51,21 +51,16 @@ class Bullets(my_sprite):
         :param choice: The attack patern chosen for Pil's next attack.
         """
         box = BattleBox()
+        self.__reset_values()
         match choice:
             case 1:
-                self.inverse = random.choice([True, False])
-                self.angle = 90
-                self.rotation_angle = 0 
                 self.dTheta = random.uniform(1,3)
-
                 if self.inverse:
                     self.set_x(450)
                 else:
                     self.set_x(900)
                 self.set_y(random.randint(100,300))
             case 2:
-                self.inverse = random.choice([True, False])
-                self.rotation_angle = 0
                 self.set_y(100)
                 if self.inverse:
                     self.set_x(random.randint(box.get_x(), (box.get_x() + 200)))
@@ -73,13 +68,9 @@ class Bullets(my_sprite):
                     self.set_x(random.randint((box.get_x() + 250), (box.get_y() + box.get_width())))
 
             case 3:
-                self.inverse = random.choice([True, False])
-                self.rotation_angle = 0
-                self.start_time = 0
-                self.angle = 90
                 self.radius = box.get_height() / 4
                 self.time_allowed = random.randint(1000,3000)
-                self.dTheta = random.randint(5,19)
+                self.dTheta = random.randint(5,20)
                 if self.inverse:
                     self.set_x(box.get_x() + box.get_width() + 20)
                 else:
@@ -132,19 +123,19 @@ class Bullets(my_sprite):
         self.image = pygame.transform.rotate(self.image, self.rotation_angle)
 
     def pattern_three(self, current_time, rate):
-        #can't realy do this in setup so I'm foing this here
-        #clean up later
+        self.__check_kill()
+        DA = 5
+        TOTAL_DEGREES = 360
+
         if self.start_time == 0:
             self.start_time = current_time
         
-        self.__check_kill()
-
         if not time_out(self.start_time, current_time, self.time_allowed):
-            self.rotation_angle += 5
+            self.rotation_angle += DA
             super().update(current_time, rate, self.get_x(), self.get_y())
             self.image = pygame.transform.rotate(self.image, self.rotation_angle)
         else:
-            self.angle = (self.angle - self.dTheta) % 360
+            self.angle = (self.angle - self.dTheta) % TOTAL_DEGREES
             dx = math.sin(math.radians(self.angle)) * self.radius
             dy = math.cos(math.radians(self.angle)) * self.radius 
 
@@ -152,12 +143,18 @@ class Bullets(my_sprite):
                 dx = -dx
                 dy = -dy
 
-            self.rotation_angle = (-math.degrees(math.atan2(dy,dx))) % 360
+            self.rotation_angle = (-math.degrees(math.atan2(dy,dx))) % TOTAL_DEGREES
             self.set_x(self.get_x() + dx)
             self.set_y(self.get_y() + dy)
 
             super().update(current_time, rate, self.get_x(), self.get_y())
             self.image = pygame.transform.rotate(self.image, self.rotation_angle)
+
+    def __reset_values(self):
+        self.inverse = random.choice([True, False])
+        self.angle = 90
+        self.rotation_angle = 0 
+        self.start_time = 0
 
 
 class BulletsGroup(): # I don't think this is a sprite clas itself? it contains one
