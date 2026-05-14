@@ -11,6 +11,7 @@ if __name__ == "__main__":
 
     #sprites, objects and groups
     one_target = Targets(screen)
+    one_target.default()
     targetGroup = pygame.sprite.Group()
     targetGroup.add(one_target)
     background = pygame.image.load("spritesheets/background.png")
