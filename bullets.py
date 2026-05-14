@@ -14,7 +14,7 @@ class Bullets(my_sprite):
         self.HEIGHT = self.WIDTH = 30
         self.COLUMNS = 4
         self.load("spritesheets/pilBullets.png", self.WIDTH, self.HEIGHT, self.COLUMNS)
-        self.last_frame = self.COLUMNS - 1 
+        #self.last_frame = self.COLUMNS - 1 
         self.rect = self.image.get_rect()   
         self.choice = 0
         self.start_time = 0
